@@ -4,6 +4,11 @@ sidebar_position: 3
 slug: /karnaugh
 ---
 
+import Ttable1 from '@site/static/img/ttable1.png';
+import Ttable2 from '@site/static/img/ttable2.png';
+import Ttable3 from '@site/static/img/ttable3.png';
+import Grey from '@site/static/img/grey.png';
+
 # Mapas de Karnaugh
 
 Criada pelo matemático George Boole no século XIX, a álgebra booleana se tornou
