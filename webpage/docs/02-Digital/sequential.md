@@ -4,7 +4,10 @@ sidebar_position: 5
 slug: /sequential
 ---
 
-# 1. Para começarmos - De onde vem os elementos sequenciais?
+import PresetResetCircuit from '@site/static/img/preset-reset-flip-flop-circuit.png';
+import PresetResetTable from '@site/static/img/preset-reset-flip-flop-table.jpg';
+
+## 1. Para começarmos - De onde vem os elementos sequenciais?
 
 Pessoal vamos analisar agora como podemos utilizar os circuitos eletrônicos de forma sequencial. Como assim sequencia? Vamos lá! Até aqui, podemos avaliar alguns circuitos utilizando as funções combinacionais. 
 
@@ -109,4 +112,167 @@ Pessoal, além do formato que vimos para gerar uma onda quadrada, um circuito ba
 <iframe width="560" height="315" src="https://www.youtube.com/embed/VWKbQE5k89Y?si=CZipBVx7uyqbPvUW" title="Video de descrição do 555 como oscilador" frameborder="0" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen style={{display:"block", marginLeft:"auto", marginRight:"auto", marginBottom:"8px"}}></iframe>
 
 :::
+
+## 2. Sistemas Digitais
+
+Agora vamos falar um pouco dos sistemas digitais. Eles são a junção do funcionamento dos elementos combinacionais (circuitos que tem o valor de sua saída dependente diretamente apenas dos valores das entradas) com elementos de memória.
+
+> `Murilo como assim elementos de memória?`
+
+Quando estamos falando de memória aqui, estamos sinalizando que os nossos circuitos digitais, dependem também do valor de um estado anterior do sistema. Assim, essas informações precisam ficar armazenadas de alguma forma.
+
+> `Uhhhh, então vamos ter um banco de dados para guardar essas informações?`
+
+Vamos guardar elas em um nível mais simples aqui, vamos utilizar elementos que conseguem armazenar `1 bit` de informação por vez, os Flip-flops.
+
+<img 
+  src="https://ranger.uta.edu/~carroll/cse2341/fall98/chapter0/img007.GIF"
+  alt="Representação de Sistema Digital"
+  style={{ 
+    display: 'block',
+    marginLeft: 'auto',
+    maxHeight: '80vh',
+    marginRight: 'auto'
+  }} 
+/>
+<br/>
+
+Como vimos anteriormente, os Flipflops são implementados utilizando alguns circuitos combinacionais, mas daqui para frente, vamos considerar eles como um elemento de construção no nosso sistema.
+
+<img 
+  src="https://lh3.googleusercontent.com/proxy/c9MfT1SfqvXku-8zAiIaHPPkVTYIilX8Bs2DMfyuvN-VXZ4wqGm_Gpz_djHE34ELl4o17Iw1tb6bMDnvMcZROhKKoca6KzYPI-qxsLs6zGVZuB0wJvugwyi9SG0"
+  alt="Representação de Sistema Digital"
+  style={{ 
+    display: 'block',
+    marginLeft: 'auto',
+    maxHeight: '80vh',
+    marginRight: 'auto'
+  }} 
+/>
+<br/>
+
+Vamos avaliar seu comportamento e depois avançamos com sua utilização. Como estes elementos trazem a capacidade de guardar informação de estado, é importante considerar qual o estado anterior que eles estavam, suas entradas, a presença do sinal do clock e então analisar qual será o valor da saída futura.
+
+No caso do Flip-flop RS, quando suas entradas `R` e `S` são mantidas em `Zero (0)`, o valor de suas saídas não se altera. Uma outra característica importante de se observar nas saídas do flip-flop, `Q`e `Q'` é que elas são complementares. Portanto quando a saída `Q` estiver em nível alto (1), a saída `Q'` estará necessariamente em nível baixo (0). ***SPOILER:*** Guardem essa informação, pois ela vai ser importante para compreender um estado deste flip-flop em especial.
+
+<img 
+  src="https://hackatronic.com/wp-content/uploads/2024/10/SR-Flip-Flop-1210x642.webp"
+  alt="Representação de Sistema Digital"
+  style={{ 
+    display: 'block',
+    marginLeft: 'auto',
+    maxHeight: '80vh',
+    marginRight: 'auto'
+  }} 
+/>
+<br/>
+
+Quando a entrada `R` é colocada em `Um (1)` e a entrada `S` é colocada em nível `Zero(0)`, a saída `Q` é forçada para o nível `Zero(0)`. Aqui é importante levar um comportamento em consideração. Se ela já estiver em nível `Zero(0)`, ela vai manter esse nível. Agora, quando temos o comportamento contrário, a entrada `S` é colocada em nível `Um(1)` e a entrada `R` em nível `Um(1)`, o valor da saída `Q` vai para `Um(1)`. 
+
+Agora chegamos a uma situação complexa: as entrada `R` e `S` são colocada em nível `Um(1)`. Neste momento, nosso flip-flop assume um estado indeterminado. O que isso significa? A suas saídas não se estabilizam em um nível lógico, elas ficam trocando de valor enquanto este estado permanecer.
+
+Agora vamos verificar o comportamento do flip-flop JK.
+
+<img 
+  src="https://de-iitr.vlabs.ac.in/exp/truth-tables-flip-flops/images/jktruth.png"
+  alt="Representação de Sistema Digital"
+  style={{ 
+    display: 'block',
+    marginLeft: 'auto',
+    maxHeight: '80vh',
+    marginRight: 'auto'
+  }} 
+/>
+<br/>
+
+Observando está tabela verdade podemos observar alguns comportamentos semelhantes ao do flip-flop RS. Se as entradas `J` e `K` são mantidas em nível `Zero(0)` as saídas são mantidas em seus estados anteriores, elas não sofrem mudança. Quando a entrada `J` é acionada e a entrada `K` não, a saída `Q` vai para o nível alto. Agora quando temos uma inversão, a entrada `J` é mantida em nível baixo e a entrada `K` é mantida em nível alto, a saída `Q` vai para nível baixo.
+
+Pessoal, temos aqui três (3) operações que nosso elemento de memória já consegue fazer:
+- `Latched`: mantém o estado atual da informação;
+- `Set`: coloca a informação em nível alto (1);
+- `Reset`: coloca a informação em nível baixo (0).
+
+Aqui vem um ponto interessante: o que acontece na situação de indeterminação do flip-flop RS? Qual o comportamento quando ambas as entradas `J` e `K` são enviadas para nível alto? Aqui temos a implementação do nossa quarta operação: o `Toggle`. O estado atual da saída `Q` é invertido.
+
+:::tip[Carregamento de Informações]
+
+Aqui cabe destacar uma informação interessante. O valor prévio dos flip-flops pode ser definido por um circuito chamado de `Preset/Clear`. A função destes circuitos é carregar o valor desejado na saída do flip-flop independente do valor do estado anterior. Em geral, eles são sinais ativos em nível baixo, ligado sem `Zero`.
+
+<img 
+  src={PresetResetCircuit}
+  alt="Circuito de Preset e Reset"
+  style={{ 
+    display: 'block',
+    marginLeft: 'auto',
+    maxHeight: '40vh',
+    marginRight: 'auto'
+  }} 
+/>
+<br/>
+
+<img 
+  src={PresetResetTable}
+  alt="Tabela Verdade de Preset e Reset"
+  style={{ 
+    display: 'block',
+    marginLeft: 'auto',
+    maxHeight: '40vh',
+    marginRight: 'auto'
+  }} 
+/>
+<br/>
+
+:::
+
+
+:::tip[FlipFlop Tipo D]
+
+Existe um tipo especial de flipflop chamado de `Tipo D`. Este flipflop é muito utilizado por ser capaz de armazenar um bit de informação. Ele pode ser implementado utilizando um flipflop JK, utilizando seu comportamento de `Set` e `Reset`.
+
+<img 
+  src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAWIAAACOCAMAAAA8c/IFAAAA8FBMVEX///+amprAwMD7+/s+Pj6mpqa0tLTMzMyKiopXV1c1NTXv7+/j4+Nqamr7/fv3+/cAZQBwqXAdHR1wpXAAbgAlcCU/gj/U5dSsyayEhITw9vA5hTkfex8AZgDa6doAAACPuo8AXwCcv5xJk0nV1dXR0dHH28csgixsbGxLhku50rmox6hHi0fz8/O6urozezMAdgBPg09inmJJSUlkmWTn8OdyoXJ7rHsvfi92dnaUlJRfX18RERGlvKXJ2cltnG0ATwCHrod2nHYfcx+RuJEdfh0AdwBTk1MziTNdll0pKSlhj2EYGBixyrFUmVTC3MLDbppxAAAHe0lEQVR4nO2daXuaShSAxwXchVQakCghxBCjMRoViZqmtZqbpbX5///msmlcaJ97Oxwket4PYRLzMPAynjkzyEgIgiAIgvwFbCYcUrs+0d2Rjrdy8LRi7K5PdHekw2leDCqGBhWDg4rBQcXgoGJwUDE4qBgcVAwOKgYHFYODisFBxeCgYnBQMTioGBxUDA4qBid8xd1vZxbVkhF2xVvsreIjXm02m5P2iRh2zZvsr+LPir3R777uuh3vsWK3+c4qethVb7D3ivWOFHbVG+y9YvFxxoVd9zp7r1i5RMVALBQ/dLRi2HWvs/eKG5152FVvsO+Ki6X2rhPjPVbs5MVNYbLjULzHivlfR0fdCv+y65FH8Ir9+5bwFau3Ni+7TorJiuJid0odtIriUWcqnDS235o400bsfuGYWnGz0pfEt8HU3HpzMje0+6YnNYqtw8RCoXfhHUAAinXBlO2tVNlKRZlCAMfKJqgOLx9fJ9Vj4mEwDrAVd9tOJ07kwbNB9KaofZ8spmCYcgDHmqJTvEU9H+z+fkOAgUIWSl5J6jSIJpx01cf2m/uXKASKLQofTrFYVb1SY6oRjbeihdwx3ZARye7u4ynWedUriW1LcdsOEucDN7tAxSQIxYqgeqWG0CTasR2Yz/tOB3jwirmGzgWgmLt88RLiZkcn2pWduZ333fzt0BXLA6utFUtXCuW+1KkVG4yJYvSvDUsxtmIXpxXPKorVBj0bf4/xaGtV764rDYKKlzixWDwWusKUfjivXAvdpirw1+JS8QsGCre7Ewe3/SBu1HJS//ZW1SeXDTL/bss1J9iKQSYzi43Gxl9QMTioGBxUDM5HUsxZuIWEXeRob2Cj4g2M2eN0+k/T6qW5yjfepks5XkDF6ygnx01RnFVMmXAnd01JkrT2MZ1jVLwG9+T61ISmpfjaiRGSVaYBFa/R4F2dxrMpW4qdmKwIE6pwjIrXMAUvKMh2oHAVvwkaVTWoeBXu5fH97rmlWOZanC5Qzo+h4lU2FPNVi88/3uiqGWVqdDv4b3wQxcWS8D7daGUUUkOSdNoPbI2GmXjAN3b9+CCKiVp170sU9bm8yChoSddqmTL8QDKSiuu5rT+J3s0x+fzFWHR3tFixOF8egzuOkuJa8vWTw+m9u82W3188qjrT5mpVIwEqJombJLSBKCnOFza6+EJs5Zcu/6yqnapaJNxdcIrtC1uHDchRUkzYcmv119rr2rk3Bj9+DOyIzJl0Q44FXtKWK2fykJIjpXijGRcY2OqWeTGTYVp//E8qIqWYMOWV5pRK+p13LZZOByTkfeiRqpfhHEdLcX51MDD0OzS2N0rFh5lA0oCV0V1uNL74w39SES3FZFRfFlOZ7dSN5O9tLYlYJohGtzaAZu+hTERMceJ10T4Tvo04w3gvBhGm1+co8skhTKcXMcVWz+MVUr63Pn56FuL1WoqWWn0jRyzDzFlETTHJujGxlfZtp/feNpVM05PcCL9sD2TqLXKK2bGzqfkPbHtxZ5PwvwD/k/VA0RoVaiCRInKKW67FYcz31XjW6QPjvSBSijXFtczQp3sNgsgpJuzQ+pHP/uZ8y9k4acXuA3l8YlVx/JWBGuFFT3GucLPMHHyIZz69FoJpb++Kc+VA3hb+RE8xYcuJjdkJIJaKa2OoIGETQcX5emocylF5ihPxHuWDg38mgooJW++FUo+rOFfOgI2dHSKoOJU5PR0BznwtcRTnwe8tRU/xKMvm8sNsCDeHbcVsFvzZzsgpvkk6PQ/rNwkUMOmLxDAJfykjpzjpjt9avrNAwZJmxmX4Cxk9xYtZCBb4lgexQxJ8HeTAFYdz7pFTnHS7n1ACxYF+pi2edXIoZhxCd3egikksy+Qv6r2QkrYQiJ5ikirfj2OhDT3giaBi38+0QXDIivG5O3BQMTioGBxUDA4qBidExcrcWfpEnkuUS9co8y9f5uvrZcrzB/tDuoeu2F6QihBOFVQ6xdrxZanfuVpbAEepOOtoHrpiyfl2EVWY0BmeVWeGLBumsOpYOXFWwUbFlmKNN+mebBCn7pKZxe7qgm/GywwDhatYOqN9sMEUvCgsdjSiV6Unge8aRNacZYJQsd4QupQ7kvvP3jUyLgecKFzO9Ob01+JVVGye8LQL4RlX515Jfvoqi7xplczlE8UHr7gqTDR+RrejFcXXtmK7z1MfF9ft4BXzVmL1a0r3wLrcv1wGigknVt0kZbHMQFQVJ+B5zyjcBS8pmC186nZ3x28pDuJog4VJhsLpxSIvblQHVOFYaXc5IpdKypN1rTYVsz/pDzUL9BwKNKPl0IMzKZcZkoSSaLzdndm72WrFUVxLPiTeB9D2uq10S5M2+pWnp8rgaWC14jNHMR/pWBwStmLjwYkQReWB8vuIjAcLWTFNWXZ2qTxEOmkLCYjJTM7YGiiiYnBQMTioGBxUDA4qBgcVg4OKwUHF4KBicFAxOKgYHFQMDioGBxWDg4rBQcXgoGJwUDE4qBgcVAwOKgYHFYODisFBxeCgYnBQMTioGBxUDM5BKw7l6+4Ie8CKR5+yYXAazEe4/wX7kLxRk5xSaAAAAABJRU5ErkJggg=="
+  alt="FlipFlop Tipo D"
+  style={{ 
+    display: 'block',
+    marginLeft: 'auto',
+    maxHeight: '40vh',
+    marginRight: 'auto'
+  }} 
+/>
+<br/>
+
+<img 
+  src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTiQVDGWXGoZ1AUIvHe9G5jKtMbKJpJ0VUJPQ&s"
+  alt="FlipFlop Tipo D Tabela Verdade"
+  style={{ 
+    display: 'block',
+    marginLeft: 'auto',
+    maxHeight: '80vh',
+    marginRight: 'auto'
+  }} 
+/>
+<br/>
+
+:::
+Bom agora temos nossos quatro comportamentos para implementar nossos sistemas digitais. 
+
+## 3. Transferência de Dados
+
+A operação mais comum realizada com os Flipflop, ou também chamados muitas vezes de registradores, é a transferência de dados. Nela, informações são transmitidas de um ou mais flipflops para outros. Desta forma, conseguimos armazenar e deslocar dados em nossos circuitos.
+
+<img 
+  src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRw8yG5m0bJpDSQ8SBWNFZc0EBidMOfVnhMgw&s"
+  alt="FlipFlop Tipo D Tabela Verdade"
+  style={{ 
+    display: 'block',
+    marginLeft: 'auto',
+    maxHeight: '80vh',
+    marginRight: 'auto'
+  }} 
+/>
+<br/>
+
+Vamos ver como podemos realizar estas operações?
+
+### 3.1 Transferência Paralela de Dados
 
