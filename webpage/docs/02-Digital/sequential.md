@@ -6,6 +6,7 @@ slug: /sequential
 
 import PresetResetCircuit from '@site/static/img/preset-reset-flip-flop-circuit.png';
 import PresetResetTable from '@site/static/img/preset-reset-flip-flop-table.jpg';
+import ContadorUpAsync from '@site/static/img/contador-up-async.png'
 
 ## 1. Para começarmos - De onde vem os elementos sequenciais?
 
@@ -296,6 +297,8 @@ Os registradores de deslocamento são um conjunto de flipflops organizados de mo
 
 Analisando o circuito abaixo, temos um registrador de dados serial de 4 bits. Cada um dos flipflops do sistema é responsável por armazenar um bit de informação. Este circuito tem uma característica interessante: sua saída pode ser recebida de forma serial (no último registrador - `QD`), ou de forma paralela, pegando a saída de cada um dos flipflops do sistema. Todos os sinais de clock e clear estão ligados em uma fonte comum, portanto, quando um destes sinais for enviado, ele vai ser percebido por todos os dispositivos do sistema.
 
+Observando a carta de tempos da figura abaixo, temos que todos os flipflops estão em nível zero (0) no instante inicial da análise. Quando o sinal na entrada `Serial Data In/ Data Input` é colocado para um (1), este é enviado para o primeiro flipflop do conjunto FFA no próximo sinal de clock (momento 1 do sinal de clock). No momento 2 do sinal de clock, este nível um (1) em `QA` é enviado para o FFB. Como o sinal de entrada está em zero (0), este é enviado para FFA. Os dados são transmitidos sequencialmente a cada pulso de clock no sistema.
+
 <img 
   src="https://preview.redd.it/eb9qn4gte0x71.gif?width=505&auto=webp&s=63c686cd113150e88c5f33bc3b0442c61bf0333e"
   alt="Circuito de flipflops para transferência serial de dados"
@@ -322,4 +325,58 @@ Analisando o circuito abaixo, temos um registrador de dados serial de 4 bits. Ca
 
 ## 4. Contadores
 
-Os contadores são um tipo de sistema digital que utiliza os elementos que discutimos até aqui para implementar uma contagem. Ele pode ser representado de algumas formas
+Os contadores são um tipo de sistema digital que utiliza os elementos que discutimos até aqui para implementar uma contagem. Ele pode ser representado de algumas formas que vamos estudar. Primeiro, é necessário compreender um ponto bastante relevante: até que valor é possível contar. Essa informação é determinada pelo número de flipflops utilizados no sistema. O valor total que pode ser contado é igual a 2 elevado ao número de flipflops no sistema. Portanto, para um sistema como o da figura, onde temos 4 flipflops, conseguimos contar 16 números (0 até 15).
+
+<img 
+  src="https://web.njit.edu/~gilhc/COE394/Images/lab7/4brcount.gif"
+  alt="Tabela Verdade do Registrador de Deslocamento Serial"
+  style={{ 
+    display: 'block',
+    marginLeft: 'auto',
+    maxHeight: '80vh',
+    marginRight: 'auto'
+  }} 
+/>
+<br/>
+
+### 4.1 Contadores Assíncronos
+
+Vamos avaliar este circuito. Ambas as entradas, `J` e `K` estão em nível alto, portanto todos estão com o comportamento de `Toggle`. Um sinal de limpar todos é enviado ao `Clear` dos flipflops antes de iniciarmos a contagem, assim garantimos que todos eles estão em nível baixo.
+
+<img 
+  src={ContadorUpAsync}
+  alt="Tabela Verdade de Preset e Reset"
+  style={{ 
+    display: 'block',
+    marginLeft: 'auto',
+    maxHeight: '40vh',
+    marginRight: 'auto'
+  }} 
+/>
+<br/>
+
+Como o clock dos flipflops apresenta detecção de borda (esse triangulo de lado), sendo ativado em bordas de decida (quando o sinal vai de um (1) para zero (0), indicado por esse circulo na frente do triangulo), cada vez que o clock muda, em uma borda de descida, o sinal de `L1` muda também. O sinal de `L1` é também o sinal de clock para o flipflop 2, portanto, quando ele muda com uma borda de decida, o sinal de `L2` muda também. 
+
+Aqui podemos observar algumas coisas, o sinal `L1` tem metade da frequência do sinal do clock. Já o sinal de `L2` tem metade da frequência do sinal de `L1`. Não apenas isso, podemos observar mais um comportamento interessante, quando todos os flipflops estão em nível alto, com mais um sinal de clock, todo o sistema é reiniciado e a contagem é iniciada do valor zero (0) novamente.
+
+Este é um contador assíncrono, os sinais de clock não estão sincronizados, para cima. É possível montar outros tipos de contadores.
+
+:::tip[Exercício]
+
+Como você poderia mudar este contador para contar para baixo (decrescente)?
+
+:::
+
+Os contadores podem ser utilizados em diferentes aplicações, como:
+
+- `Contagem de eventos`: contando quantos elementos acionaram um determinado sensor, por exemplo.
+- `Medida de tempo`: com um sinal de clock conhecido, a contagem pode ser utilizada para gerar intervalos de tempo para o sistema.
+- `Conversor Analógico para Digital`: uma das formas de realizar está conversão é fazendo aproximações com contadores e comparadores.
+- `Divisores de Frequência`: como a frequência do sinal de clock é dividida no contador, este comportamento pode ser utilizado parar gerar sinais em diferentes frequências no sistema.
+
+Agora vamos avaliar outro tipo de contador: os síncronos.
+
+### 4.2 Contadores Síncronos
+
+Os contadores síncronos assim são chamados pois o sinal de clock entre todos os seus elementos está ligado em conjunto. Portanto, eventuais delays que possam surgir da propagação do sinal, mesmo que da ordem de alguns nano ou milissegundos, não serão tão perceptíveis neste tipo de contador.
+
