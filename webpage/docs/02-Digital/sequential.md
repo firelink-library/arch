@@ -6,7 +6,10 @@ slug: /sequential
 
 import PresetResetCircuit from '@site/static/img/preset-reset-flip-flop-circuit.png';
 import PresetResetTable from '@site/static/img/preset-reset-flip-flop-table.jpg';
-import ContadorUpAsync from '@site/static/img/contador-up-async.png'
+import ContadorUpAsync from '@site/static/img/contador-up-async.png';
+import ContadorUpSync from '@site/static/img/contador-up-sync.png';
+import ContadorUpSyncQ1 from '@site/static/img/contador-up-sync-q1.png';
+import ContadorUpSyncQ2 from '@site/static/img/contador-up-sync-q2.png';
 
 ## 1. Para começarmos - De onde vem os elementos sequenciais?
 
@@ -380,3 +383,60 @@ Agora vamos avaliar outro tipo de contador: os síncronos.
 
 Os contadores síncronos assim são chamados pois o sinal de clock entre todos os seus elementos está ligado em conjunto. Portanto, eventuais delays que possam surgir da propagação do sinal, mesmo que da ordem de alguns nano ou milissegundos, não serão tão perceptíveis neste tipo de contador.
 
+<img 
+  src="https://learnabout-electronics.org/Digital/images/counter-sync-clock-3-stage.gif"
+  alt="Tabela Verdade de Preset e Reset"
+  style={{ 
+    display: 'block',
+    marginLeft: 'auto',
+    maxHeight: '40vh',
+    marginRight: 'auto'
+  }} 
+/>
+<br/>
+
+Ao observar o circuito do nosso contador, podemos confirmar algumas coisas: este contador pode contar até o valor 7 (0 até 7), pois possui apenas 3 bits. Agora o que está diferente aqui é o circuito de acionamento dos flipflops. Para compreender este circuito, vamos avaliar a carta de tempo do contador.
+
+<img 
+  src={ContadorUpSync}
+  alt="Tabela Verdade de Preset e Reset"
+  style={{ 
+    display: 'block',
+    marginLeft: 'auto',
+    maxHeight: '40vh',
+    marginRight: 'auto'
+  }} 
+/>
+<br/>
+
+Ao observar este mapa de tempos, vamos verificar quando cada uma das saídas, `Q0`, `Q1` e `Q2` muda de estado, uma delas por vez. Iniciando nossa análise por `Q0`, podemos ver que ele muda de estado cada vez que o sinal de clock aciona uma nova borda de descida. Portando, podemos deixar suas duas entradas `J` e `K` energizadas (ativas em nível alto).
+
+Agora vamos para `Q1`. Quando observamos os pontos que `Q1` muda no mapa, podemos ver que o estado da saída `Q0` sempre está em nível alto. Já `Q2` varia, sendo considerado tanto em nível alto quanto em nível baixo. O que podemos inferir, utilizando a algebra de Boole, que este sinal pode ser desconsiderado. Assim, o sinal `J` e `K` do FF1 podem ser ligados diretamente na saída `Q0`. 
+
+<img 
+  src={ContadorUpSyncQ1}
+  alt="Tabela Verdade de Preset e Reset"
+  style={{ 
+    display: 'block',
+    marginLeft: 'auto',
+    maxHeight: '40vh',
+    marginRight: 'auto'
+  }} 
+/>
+<br/>
+
+Por fim, vamos verificar os pontos que o `Q2` muda de estado. Podemos verificar que os sinais `Q0` e `Q1` precisam estar em nível alto para acionar o FF2. Logo estes sinais são ligados ao `J` e `K` deste flipflop.
+
+<img 
+  src={ContadorUpSyncQ2}
+  alt="Tabela Verdade de Preset e Reset"
+  style={{ 
+    display: 'block',
+    marginLeft: 'auto',
+    maxHeight: '40vh',
+    marginRight: 'auto'
+  }} 
+/>
+<br/>
+
+Algo importante que podemos observar é que os contadores síncronos podem ser utilizados para contar qualquer tipo de sequencia. Pessoal, desta forma cobrimos alguns dos elementos de eletrônica digital para estudarmos os dispositivos de comunicação. Verifiquem com calma cada um destes elementos e como eles funcionam. Bons estudos 👓⌨️.
