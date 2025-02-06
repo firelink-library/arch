@@ -276,3 +276,50 @@ Vamos ver como podemos realizar estas operações?
 
 ### 3.1 Transferência Paralela de Dados
 
+A transferência paralela de dados acontece quando os dados são carregados diretamente nos registrados, com uma via dedicada para cada bit de informação. Quando o sinal de clock é enviado, os dados são carregados para os registradores. Este tipo de comunicação é bastante rápida por possuir uma via de comunicação para cada bit de informação e por toda ela ser transmitida de uma única vez. Contudo, este também é o seu maior problema, em situações que precisamos enviar grandes quantidades de dados, utilizar a comunicação paralela pode não ser a melhor opção.
+
+<img 
+  src="https://www.expertsmind.com/CMSImages/105_Parallel%20Data%20Storage.png"
+  alt="Transferência paralela de dados"
+  style={{ 
+    display: 'block',
+    marginLeft: 'auto',
+    maxHeight: '80vh',
+    marginRight: 'auto'
+  }} 
+/>
+<br/>
+
+### 3.2 Transferência Serial de Dados: Registradores de Deslocamento
+
+Os registradores de deslocamento são um conjunto de flipflops organizados de mode que os números binários, as informações, armazenadas neles possam ser deslocados de para o próximo flipflop a cada pulso de clock. Essa operação acontece em diversos outros elementos, como quando estamos utilizando um calculadora, ao digitar um novo número, os números anteriores são deslocados para o lado para que ele possa ser inserido no display.
+
+Analisando o circuito abaixo, temos um registrador de dados serial de 4 bits. Cada um dos flipflops do sistema é responsável por armazenar um bit de informação. Este circuito tem uma característica interessante: sua saída pode ser recebida de forma serial (no último registrador - `QD`), ou de forma paralela, pegando a saída de cada um dos flipflops do sistema. Todos os sinais de clock e clear estão ligados em uma fonte comum, portanto, quando um destes sinais for enviado, ele vai ser percebido por todos os dispositivos do sistema.
+
+<img 
+  src="https://preview.redd.it/eb9qn4gte0x71.gif?width=505&auto=webp&s=63c686cd113150e88c5f33bc3b0442c61bf0333e"
+  alt="Circuito de flipflops para transferência serial de dados"
+  style={{ 
+    display: 'block',
+    marginLeft: 'auto',
+    maxHeight: '80vh',
+    marginRight: 'auto'
+  }} 
+/>
+<br/>
+
+<img 
+  src="https://www.electronics-tutorials.ws/wp-content/uploads/2018/05/sequential-seq34.gif"
+  alt="Tabela Verdade do Registrador de Deslocamento Serial"
+  style={{ 
+    display: 'block',
+    marginLeft: 'auto',
+    maxHeight: '80vh',
+    marginRight: 'auto'
+  }} 
+/>
+<br/>
+
+## 4. Contadores
+
+Os contadores são um tipo de sistema digital que utiliza os elementos que discutimos até aqui para implementar uma contagem. Ele pode ser representado de algumas formas
