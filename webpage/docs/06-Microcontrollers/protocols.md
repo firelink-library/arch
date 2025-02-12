@@ -230,6 +230,36 @@ Atualmente, utilizamos uma quantidade menor de pinos para realizar a comunicaç�
 
 O que acontece pessoal, muitos dispositivos, eme especial sensores, mandam os dados para o controlador quando um evento acontece. Muitos microcontroladores e processadores possuem rotinas de interrupção para detectar quando um conjunto de dados está chegando. Assim, quando o dispositivo envia os dados, o controlador consegue fazer a sua leitura. Como em diversos destes casos, a comunicação é simplex, não é necessário fazer a outra ligação.
 
+Mas agora vamos avaliar um pouco mais sobre a configuração destes dispositivos. O protocolo de comunicação serial pode ser implementado de forma síncrona, como no caso do SPI e do I2C, onde o sinal do clock é enviado além dos sinais de dados. Ou ainda pode ser implementado de forma assíncrona. No caso da implementação assíncrona, não existe sinal de sincronização de dados, portanto tanto o transmissor quando o receptor são responsáveis por gerar este sinal. Ambos os dispositivos precisam estar com a mesma configuração para que a comunicação possa acontecer.
+
+Para a ***Comunicação Serial Assíncrona*** acontecer, é necessário configurar:
+- `Data bits`: quantidade de bits que são enviados em cada mensagem;
+- `Bits de Sincronização`: quantos bits são utilizados para iniciar e terminar a mensagem;
+- `Bits de Paridade`: quantos bits de paridade são utilizados nas mensagens;
+- `Baud Rate`: qual a velocidade no envio de dados.
+
+<img 
+  src="https://cdn.sparkfun.com/r/700-700/assets/f/9/c/0/2/50d2066fce395fc43b000000.png"
+  alt="Frame de mensagem Serial"
+  style={{ 
+    display: 'block',
+    marginLeft: 'auto',
+    maxHeight: '80vh',
+    marginRight: 'auto'
+  }} 
+/>
+<p align="center">Retirado de: https://cdn.sparkfun.com/r/700-700/assets/f/9/c/0/2/50d2066fce395fc43b000000.png</p>
+<br/>
+
+:::tip[Bit de Paridade]
+
+Bits de paridade são bits adicionais inseridos no fim ou no início do quadro de dados em comunicações seriais para auxiliar na detecção de erros de transmissão. Em geral, o transmissor calcula se o número de bits “1” do pacote de dados é par ou ímpar e define o bit de paridade para manter o total coerente com a configuração (paridade par ou ímpar). Ao receber os dados, o dispositivo de destino faz a mesma contagem e, se houver discrepância, conclui que ocorreu um erro no envio. Para saber mais:
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/ehPOaV066VU?si=u5y4Q9HxwE17c5z8" title="Video que traz mais detalhes sobre a utilização de bits de paridade" frameborder="0" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen style={{display:"block", marginLeft:"auto", marginRight:"auto", marginBottom:"8px"}}></iframe>
+
+
+:::
+
 :::tip[Mais Material de Referencia]
 
 - [Serial Communication](https://learn.sparkfun.com/tutorials/serial-communication/all)
