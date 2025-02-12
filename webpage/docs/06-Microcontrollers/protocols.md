@@ -4,6 +4,8 @@ sidebar_position: 4
 slug: /protocols
 ---
 
+import Atmega8UART from '@site/static/img/atmega8-uart-blocks.png';
+
 # 1. Elementos de Comunicação
 
 Vamos voltar aos primórdios aqui e depois chegar na comunicação entre nossos dispositivos. Para isso, vamos primeiro pensar em um problema: ***como dois elementos conseguem se comunicar?***
@@ -259,6 +261,124 @@ Bits de paridade são bits adicionais inseridos no fim ou no início do quadro d
 
 
 :::
+
+Agora vamos verificar o seguinte cenário: desejamos transmitir a letra "A", em ASCII pela porta serial. Vamos utilizar como configuração 9600 bits por segundo de velocidade, paridade par e um stop bit. Primeiro, vamos verificar como fica a letra "S", em binário. Consultando uma tabela ASCII (https://www.ascii-code.com/), que é uma forma de representar os símbolos e caracteres, podemos ver que a letra "S", pode ser representada por: "	01010011". Quando formos transmitir esse caractere, deve estar configurado entre o transmissor e o receptor a quantidade de bits que serão enviados, para o nosso exemplo, vamos considerar que serão enviados 8 bits por mensagem.
+
+<img 
+  src="https://www.robocore.net/upload/tutoriais/50_img_10_H.png?526"
+  alt="Frame de mensagem Serial"
+  style={{ 
+    display: 'block',
+    marginLeft: 'auto',
+    maxHeight: '80vh',
+    marginRight: 'auto'
+  }} 
+/>
+<p align="center">Retirado de: https://www.robocore.net/upload/tutoriais/50_img_10_H.png?526</p>
+<br/>
+
+Por que a velocidade e a quantidade de bits são importantes? Pois elas que permitem que o receptor consiga determinar qual o intervalo de tempo necessário para realizar a leitura de cada um dos bits de dados. Na imagem, podemos ver que os dados são transmitidos em ordem inversa, enviando primeiro o LSB (Least Significant Bit) para o MSB (More Significant Bit). Para iniciar a transmissão, pelo intervalo de 1 bit, o canal é colocado em nível baixo. Esse comportamento é chamado de envio de start bit. Depois do envio dos dados, se existir paridade configurada, estes bits são enviados e por fim, os bits de parada são anexados a mensagem.
+
+Algumas das velocidade mais comuns para a comunicação serial são: 9600, 19200, 115200. Não se pode utilizar qualquer velocidade, pois esse intervalo é calculado por hardware, então é preciso verificar no dispositivo que será utilizado quais são as velocidades que ele consegue operar. Vale destacar aqui que quanto maior a velocidade utilizada, mais suscetível a ruídos e interferências a comunicação está. Em situações que os dispositivos não estão se comunicando, uma possibilidade é reduzir a taxa de transferência entre eles.
+
+<img 
+  src="https://www.firewall.cx/images/stories/networking/cabling_dcc-4v2.gif"
+  alt="Frame de mensagem Serial"
+  style={{ 
+    display: 'block',
+    marginLeft: 'auto',
+    maxHeight: '80vh',
+    marginRight: 'auto'
+  }} 
+/>
+<p align="center">Retirado de: https://www.firewall.cx/images/stories/networking/cabling_dcc-4v2.gif</p>
+<br/>
+
+Outro ponto importante é referente aos níveis de tensão utilizados por estes dispositivos. Quando o dispositivo utiliza lógica TTL, ele representa os níveis altos (uns 1), com 5V. Já quando o dispositivo utiliza interface RS-232, os níveis alto são representados por um sinal entre -3 e -25V e os níveis baixos por sinais de +3 e +25V.
+
+<img 
+  src="https://cdn.sparkfun.com/r/600-600/assets/1/8/d/c/1/51142c09ce395f0e7e000002.png"
+  alt="Nível de Tensão TTL"
+  style={{ 
+    display: 'block',
+    marginLeft: 'auto',
+    maxHeight: '80vh',
+    marginRight: 'auto'
+  }} 
+/>
+<p align="center">Retirado de: https://cdn.sparkfun.com/r/600-600/assets/1/8/d/c/1/51142c09ce395f0e7e000002.png</p>
+<br/>
+
+<img 
+  src="https://cdn.sparkfun.com/r/600-600/assets/b/d/a/1/3/51142cacce395f877e000006.png"
+  alt="Nível de Tensão RS-232"
+  style={{ 
+    display: 'block',
+    marginLeft: 'auto',
+    maxHeight: '80vh',
+    marginRight: 'auto'
+  }} 
+/>
+<p align="center">Retirado de: https://cdn.sparkfun.com/r/600-600/assets/b/d/a/1/3/51142cacce395f877e000006.png</p>
+<br/>
+
+:::danger[Mas meu notebook não tem essa interface serial! Como eu ligo na porta USB?💻]
+
+Quando utilizamos um dispositivo de comunicação serial por uma porta USB, em geral este dispositivo instala um Driver no computador que diz ao sistema operacional que ali existe um elemento serial. Este dispositivo interpreta os sinais enviados pelo físico USB e converte eles para o padrão serial da porta UART e vice-versa. Este vídeo apresenta um pouco mais de detalhes de como estes dispositivos funcionam:
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/-NdmjdaMY3E?si=RHrJOxh5Sq0WDePy" title="Video explica os conversores USB para Serial" frameborder="0" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen style={{display:"block", marginLeft:"auto", marginRight:"auto", marginBottom:"8px"}}></iframe>
+
+:::
+
+O diagrama proposto pelo pessoal da SparkFun abaixo ilustra muito bem e de forma simplificado, como este dispositivo funciona dentro do microcontrolador. Os dados são carregados pelo controlador para o registrador serial. Este registrador, em geral, possui associado a ele uma fila que funciona como um buffer para receber estes dados. Cada vez que está fila não está fazia, é possível transmitir os dados dela para outros dispositivo serialmente. Assim como a fila de saída, os controladores possuem uma fila de entrada, assim quando os dados são recebidos na porta serial, eles são colocados dentro desta fila para serem consumidos posteriormente.
+
+<img 
+  src="https://cdn.sparkfun.com/r/700-700/assets/d/1/f/5/b/50e1cf30ce395fb227000000.png"
+  alt="Hardware Serial no Microcontrolador"
+  style={{ 
+    display: 'block',
+    marginLeft: 'auto',
+    maxHeight: '80vh',
+    marginRight: 'auto'
+  }} 
+/>
+<p align="center">Retirado de: https://cdn.sparkfun.com/r/700-700/assets/d/1/f/5/b/50e1cf30ce395fb227000000.png</p>
+<br/>
+
+Abaixo o diagrama do controlador ST16C550.
+
+<img 
+  src="https://cdn.sparkfun.com/r/500-500/assets/e/9/7/5/4/50d24680ce395f7172000000.png"
+  alt="Hardware Serial no Microcontrolador"
+  style={{ 
+    display: 'block',
+    marginLeft: 'auto',
+    maxHeight: '80vh',
+    marginRight: 'auto'
+  }} 
+/>
+<p align="center">Retirado de: https://cdn.sparkfun.com/r/500-500/assets/e/9/7/5/4/50d24680ce395f7172000000.png</p>
+<br/>
+
+Como comparação, o Arduino utiliza como microcontrolador, o Atmega8. Este microcontrolador possui em seu [manual](https://ww1.microchip.com/downloads/en/DeviceDoc/Atmel-2486-8-bit-AVR-microcontroller-ATmega8_L_datasheet.pdf), o diagrama de comunicação serial a seguir. Podemos observar no diagrama que ele é dividido em três grandes blocos:
+- `Gerador de Clock`: No ATmega8, o gerador de clock interno para a interface de comunicação serial (USART) é responsável por definir a taxa de transmissão (baud rate) dos dados. Ele divide a frequência principal do microcontrolador (ou de um cristal externo) por um fator configurável, resultando no sinal de clock que sincroniza a transmissão e recepção dos bits. Ajustando registradores específicos, o desenvolvedor seleciona a frequência de baud desejada, garantindo que transmissor e receptor operem de forma estável e confiável na velocidade estabelecida;
+- `Transmissor`: O transmissor do ATmega8 converte dados paralelos (vindos dos registradores internos) em um fluxo serial de bits, adicionando bits de start, paridade (caso habilitada) e stop conforme configurado. Ele utiliza o gerador de clock para temporizar a saída dos bits, e escreve cada bit de forma sequencial no pino TXD. Durante o envio, o firmware pode monitorar flags de status para saber quando o transmissor está pronto para enviar o próximo byte ou quando a transmissão foi concluída;
+- `Receptor`: O receptor do ATmega8 faz o caminho inverso, ou seja, converte um fluxo de bits recebidos em dados paralelos prontos para uso interno. Ele lê cada bit na entrada RXD em sincronismo com o clock gerado, valida a presença de bits de start e stop, e verifica a paridade, caso configurada. Ao finalizar a recepção de um quadro (pacote) de dados, o receptor armazena o byte em um registrador interno, sinalizando via flags que um novo dado está disponível para leitura pelo software.
+
+<img 
+  src={Atmega8UART}
+  alt="Hardware Serial no Microcontrolador"
+  style={{ 
+    display: 'block',
+    marginLeft: 'auto',
+    maxHeight: '80vh',
+    marginRight: 'auto'
+  }} 
+/>
+<p align="center">Retirado de: https://ww1.microchip.com/downloads/en/DeviceDoc/Atmel-2486-8-bit-AVR-microcontroller-ATmega8_L_datasheet.pdf</p>
+<br/>
+
+
 
 :::tip[Mais Material de Referencia]
 
