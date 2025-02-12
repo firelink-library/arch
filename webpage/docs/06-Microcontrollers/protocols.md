@@ -386,6 +386,12 @@ Vamos cobrir outros dois tipos de comunicação serial, SPI e I2C.
 
 :::
 
+:::danger[Implementando o Timming da comunicação RS-232]
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/AHYNxpqKqwo?si=txItvmYXmPvxF-5d" title="Video implementa os frames de tempo da comunicação serial" frameborder="0" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen style={{display:"block", marginLeft:"auto", marginRight:"auto", marginBottom:"8px"}}></iframe>
+
+:::
+
 ## 3.2 Comunicação SPI - Serial Peripheral Interface
 
 Por mais incrível que possam ser as aplicações que podemos fazer com a comunicação serial, ainda temos algumas limitações como:
@@ -483,10 +489,43 @@ Para utilizar mais dispositivos, é necessário utilizar o sinal de Chip-Select.
 Ótimo, agora temos uma forma de nos comunicarmos que é assíncrona e outra que é síncrona. Não precisamos de mais nada! Pronto!
 
 
+<img 
+  src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcShKVTG4R617R4putDaUqG2Yg7806L8pKVsfQ&s"
+  alt="Meme Chotto Matte"
+  style={{ 
+    display: 'block',
+    marginLeft: 'auto',
+    maxHeight: '80vh',
+    marginRight: 'auto'
+  }} 
+/>
+<p align="center">Retirado de: https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcShKVTG4R617R4putDaUqG2Yg7806L8pKVsfQ&s</p>
+<br/>
+
+Calma ai amigas e amigos! Existem diversos outros tipos e interfaces que podemos utilizar. Vamos verificar mais um interface síncrona de comunicação, o I2C. 
+
+Com o I2C, podemos ligar quantos controladores e periféricos forem necessários em um mesmo par de fios. Isso é possível pois, al';em de cada elemento possuir um endereço único na rede, ele são do tipo ***dreno aberto (open-drain)***. O que isso significa? Estes dispositivos podem enviar o nível zero (0) no barramento, mas não o nível alto. Por isso este tipo de barramento precisa de resistores de pull-up. Em geral, resistores de 4k7 ohms são capazes de lidar com redes de até 2 metros. Para maiores distâncias, utilizar resistências menores.
+
+<img 
+  src="https://cdn.sparkfun.com/r/600-600/assets/learn_tutorials/8/2/I2C_Schematic.jpg"
+  alt="Exemplo de Rede I2C com PullUp"
+  style={{ 
+    display: 'block',
+    marginLeft: 'auto',
+    maxHeight: '80vh',
+    marginRight: 'auto'
+  }} 
+/>
+<p align="center">Retirado de: https://cdn.sparkfun.com/r/600-600/assets/learn_tutorials/8/2/I2C_Schematic.jpg</p>
+<br/>
+
+O protocolo de comunicação I2C é mais complexo que o serial e o SPI. 
 
 :::tip[Mais Material de Referencia]
 
 - [I2C](https://learn.sparkfun.com/tutorials/i2c#why-use-i2c)
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/CAvawEcxoPU?si=CO96xVeY2bbX8Ilh" title="Video explica a comunicação I2C" frameborder="0" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen style={{display:"block", marginLeft:"auto", marginRight:"auto", marginBottom:"8px"}}></iframe>
 
 :::
 
