@@ -101,7 +101,9 @@ Logo menos vou adicionar um pouco sobre ele aqui! Só um momento!!⌨️👓👌
 
 - [Como colocar a Raspberry Pi Pico dentro do Arduino IDE](https://www.robocore.net/tutoriais/programacao-raspberry-pi-pico-arduino-ide?psafe_param=1&gad_source=1&gclid=CjwKCAiAqrG9BhAVEiwAaPu5zgJfS8ro9DuzgTiMkNQpsxLVbFuP7ECi9ZDyrJpzbkjpZ0g5JHh3LhoCMO8QAvD_BwE)
 - [Utilizando o SDK em C da Raspberry Pi Pico para Comunicação Serial](https://deepbluembedded.com/raspberry-pi-pico-serial-usb-c-sdk-serial-print-monitor/)
-- 
+- [Primeiros passos com a Raspberry Pi Pico usando a IDE Arduino](https://www.makerhero.com/blog/primeiros-passos-com-a-raspberry-pi-pico-usando-a-ide-arduino/)
+- [Documentação Rasberry Pi Pico](https://www.raspberrypi.com/documentation/microcontrollers/pico-series.html)
+- [Documentação Arduino](https://docs.arduino.cc/)
 
 :::
 
@@ -114,6 +116,30 @@ Vamos lá, existem diversos protocolos de comunicação que podem ser implementa
 - Comunicação I2C.
 
 Cabe destacar aqui que existem outras formas de comunicação, estas são algumas das mais comuns para utilizarmos.
+
+## 3.1 Comunicação Serial
+
+:::tip[Mais Material de Referencia]
+
+- [Serial Communication](https://learn.sparkfun.com/tutorials/serial-communication/all)
+
+:::
+
+## 3.2 Comunicação SPI - Serial Peripheral Interface
+
+:::tip[Mais Material de Referencia]
+
+- [Serial Peripheral Interface (SPI)](https://learn.sparkfun.com/tutorials/serial-peripheral-interface-spi/all)
+
+:::
+
+## 3.3 Comunicação I2C - Inter-Integrated Circuit
+
+:::tip[Mais Material de Referencia]
+
+- [A Basic Guide to I2C](https://www.ti.com/lit/an/sbaa565/sbaa565.pdf)
+
+:::
 
 # 4. Hands-on
 
