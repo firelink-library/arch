@@ -519,7 +519,30 @@ Com o I2C, podemos ligar quantos controladores e periféricos forem necessários
 <p align="center">Retirado de: https://cdn.sparkfun.com/r/600-600/assets/learn_tutorials/8/2/I2C_Schematic.jpg</p>
 <br/>
 
-O protocolo de comunicação I2C é mais complexo que o serial e o SPI. 
+O protocolo de comunicação I2C é mais complexo que o serial e o SPI. Aqui eu vou fazer uma descrição macro e básica do frame de mensagens que transitam no protocolo. As mensagens são divididas em 2 partes: um endereço e o conteúdo da mensagem. O endereço indica para a rede quem deve receber a mensagem enviada. ***IMPORTANTE:*** acho que jamais é um problema deixar claro, todos os elementos na rede I2C recebem todas as mensagens, eles simplesmente não respondem quando as mensagens não são para eles. Os dados são os bytes de dados enviados do controlador para o periférico endereçado ou a resposta de um periférico para o controlador. Os dados são enviados pela linha `SDA` depois que a linha `SCL` vai para nível baixo e lidos quando a linha `SCL` vai para nível alto.
+
+Alguns pontos que valem a pena para verificarmos:
+
+- `Condição de Início`: O primeiro passo para enviar uma mensagem no barramento I²C é gerar a condição de início, que acontece quando a linha SDA (Serial Data) é puxada para nível baixo enquanto a linha SCL (Serial Clock) ainda está em nível alto. Esse sinal indica a todos os dispositivos no barramento que uma transmissão será iniciada, estabelecendo o controlador como gerador do clock (SCL) e dando início ao envio de dados.
+- `Envio de Endereço`: Em seguida, o controlador coloca no barramento o endereço de 7 ou 10 bits do periférico com o qual deseja se comunicar, seguido de um bit que indica se a operação será de escrita (0) ou leitura (1). Como o I²C permite múltiplos periféricos conectados, esse endereço identifica qual dispositivo deve responder. Durante esse tempo, o controlador ajusta o sinal SCL, avançando um bit de cada vez.
+- `Recebimento do ACK`: Após o envio do endereço e do bit de leitura/escrita, o controlador libera a linha SDA por um ciclo de clock e verifica se o periférico selecionado puxa a linha para baixo, enviando o bit de ACK (Acknowledge). Se o periférico reconhecer corretamente o endereço, ele emite ACK; caso contrário, o controlador pode encerrar a transmissão ou tentar novamente. Esse processo de confirmação (ACK) ocorre após cada byte transmitido, servindo como verificação de erro básica.
+- `Transmissão dos Dados`: Com o periférico selecionado e pronto para receber (ou enviar, no caso de leitura), o controlador envia cada byte de dados sequencialmente, um bit por ciclo de clock. A cada byte concluído, o periférico novamente sinaliza ACK, confirmando o recebimento correto. Se for uma operação de leitura, o papel se inverte: o periférico passa a enviar os bits no mesmo barramento SDA, enquanto o controlador ainda controla o clock pela linha SCL.
+- `Condição de Parada`: Quando o controlador termina de enviar ou receber todos os bytes desejados, ele gera a condição de parada, liberando o barramento. Isso ocorre quando a linha SDA volta ao nível alto enquanto a linha SCL permanece em nível alto. Esse sinal indica a todos os dispositivos no barramento que a operação de comunicação terminou, permitindo que outro controlador possa iniciar uma nova transação ou que o mesmo retome o controle em outro momento.
+
+<img 
+  src="https://cdn.sparkfun.com/r/600-600/assets/learn_tutorials/8/2/I2C_Basic_Address_and_Data_Frames.jpg"
+  alt="Exemplo de Frame I2C"
+  style={{ 
+    display: 'block',
+    marginLeft: 'auto',
+    maxHeight: '80vh',
+    marginRight: 'auto'
+  }} 
+/>
+<p align="center">Retirado de: https://cdn.sparkfun.com/r/600-600/assets/learn_tutorials/8/2/I2C_Basic_Address_and_Data_Frames.jpg</p>
+<br/>
+
+
 
 :::tip[Mais Material de Referencia]
 
