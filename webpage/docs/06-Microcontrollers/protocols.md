@@ -378,7 +378,7 @@ Como comparação, o Arduino utiliza como microcontrolador, o Atmega8. Este micr
 <p align="center">Retirado de: https://ww1.microchip.com/downloads/en/DeviceDoc/Atmel-2486-8-bit-AVR-microcontroller-ATmega8_L_datasheet.pdf</p>
 <br/>
 
-
+Vamos cobrir outros dois tipos de comunicação serial, SPI e I2C.
 
 :::tip[Mais Material de Referencia]
 
@@ -388,17 +388,105 @@ Como comparação, o Arduino utiliza como microcontrolador, o Atmega8. Este micr
 
 ## 3.2 Comunicação SPI - Serial Peripheral Interface
 
+Por mais incrível que possam ser as aplicações que podemos fazer com a comunicação serial, ainda temos algumas limitações como:
+- **Número de dispositivo conectados**: mesmo que possam fazer broadcast da nossa mensagem, não foi um protocolo projetado para essa finalidade, quando pensamos no padrão RS-232. Outros padrões como o RS-422 e RS-485 até suportam este tipo de ligação;
+- Possui **velocidades limitadas**. 
+- Em geral, a comunicação implementada é ***ASSÍNCRONA***.
+
+Quando vamos colocar diversos dispositivos para comunicar-se, a garantia do sincronismo da informação entre eles é importante. Isso também é relevante pois não torna necessário que cada dispositivo fique responsável por gerar uma fonte de clock. Com a comunicação SPI, o sinal de clock é enviado em um canal dedicado para ele, fazendo com que todos os dispositivos possam compartilha-lo. Outro ponto muito importante: a comunicação pode ser implementada utilizando um registrador de deslocamento, o que é muito mais barato e simples que implementar todo o hardware para a comunicação serial, como a UART.
+
+<img 
+  src="https://cdn.sparkfun.com/assets/d/6/b/f/9/52ddb2d8ce395fad638b4567.png"
+  alt="Frame de Dados SPI"
+  style={{ 
+    display: 'block',
+    marginLeft: 'auto',
+    maxHeight: '80vh',
+    marginRight: 'auto'
+  }} 
+/>
+<p align="center">Retirado de: https://cdn.sparkfun.com/assets/d/6/b/f/9/52ddb2d8ce395fad638b4567.png</p>
+<br/>
+
+Os elementos e pinos mais relevantes para a comunicação SPI são:
+- `Controlador (antigo Master)`: elemento que controla a comunicação. Responsável pela geração do sinal de clock para os demais elementos;
+- `Periférico (antigo Slave)`: elemento que recebe os dados e comandos do dispositivo controlador, respondendo quando é acionado;
+- `SDO – Serial Data Out`: O sinal de saída de um dispositivo, onde os dados SPI são enviados para os demais;
+- `SDI – Serial Data In`: O sinal de entrada de um dispositivo, por onde ele recebe os dados SPI de outros elementos;
+- `CS – Chip Select`: Sinal ativado pelo controlador para comunicar com o periférico selecionado;
+- `PICO (peripheral in/controller out)`: Para dispositivos que podem ser controladores ou periféricos. o sinal de saída quando estão como controladores e de entrada quando são periféricos;
+- `POCI (peripheral out/controller in)`: Idem ao anterior, mas sinal de entrada quando o elemento for controlador e de saída quando ele for um periférico;
+- `SDIO – Serial Data In/Out`: Um sinal bidirecional.
+
+:::tip[Para Conhecer: OSHWA]
+
+Existe um movimento para ajustar os nomes dos pinos e convenções utilizadas. Este trabalho é relevante pois a terminologia Mestre/Escravo tem sido utilizada por muito tempo por diversos fabricantes, não tratando o assunto com o cuidado que lhe é devidos. Diversos fabricantes estão aderindo a movimentação de corrigir e ajustar os elementos utilizados para utilizar uma nova terminologia.
+
+<img 
+  src="https://lh5.googleusercontent.com/rMexAEcBJufGAmpLbeLUlVAFHeKI-11kC3XW6coITfdRsZaihdSh9Oo7nwah6lJYCRltiP_yUivyeFMYo9-_YrTB7s2MUjkJwb93D3UNyLRgO2_xgToedVekkXUjtPnYPfozWxFa"
+  alt="Nome dos Pinos da Comunicação SPI"
+  style={{ 
+    display: 'block',
+    marginLeft: 'auto',
+    maxHeight: '80vh',
+    marginRight: 'auto'
+  }} 
+/>
+<p align="center">Retirado de: https://lh5.googleusercontent.com/rMexAEcBJufGAmpLbeLUlVAFHeKI-11kC3XW6coITfdRsZaihdSh9Oo7nwah6lJYCRltiP_yUivyeFMYo9-_YrTB7s2MUjkJwb93D3UNyLRgO2_xgToedVekkXUjtPnYPfozWxFa</p>
+<br/>
+
+
+Recomendo fortemente a leitura do artigo: [A Resolution to Redefine SPI Signal Names](https://www.oshwa.org/a-resolution-to-redefine-spi-signal-names/)
+
+:::
+
+Vamos avaliar como os dados são trocados entre os dispositivos. O elemento responsável pela geração do clock é o controlador, os demais elementos são os periféricos da comunicação. Quando o controlador deseja mandar dados, ele envia os dados e os pulsos de clock suficientes para que estes dados possam ser enviados. Se for necessário receber dados do periférico, ele envia a quantidade de pulsos necessária para receber aquela informação.
+
+<img 
+  src="https://cdn.sparkfun.com/assets/learn_tutorials/1/6/BasicSPI_Updated2.png"
+  alt="Envio e Recebimento de Dados SPI"
+  style={{ 
+    display: 'block',
+    marginLeft: 'auto',
+    maxHeight: '80vh',
+    marginRight: 'auto'
+  }} 
+/>
+<p align="center">Retirado de: https://cdn.sparkfun.com/assets/learn_tutorials/1/6/BasicSPI_Updated2.png</p>
+<br/>
+
+Para utilizar mais dispositivos, é necessário utilizar o sinal de Chip-Select. Desta forma, o controlador aciona o elemento que deve receber a mensagem que será enviada. É importante notar que a comunicação SPI precisa de um protocolo fixo quanto a quantidade de dados que serão enviados/recebidos na troca de mensagens. Para cada dispositivo periférico adicionado na rede, é necessário um novo sinal de Chip-Select no elemento controlador.
+
+<img 
+  src="https://cdn.sparkfun.com/assets/learn_tutorials/1/6/MultipleCS_Updated2.png"
+  alt="Rede SPI"
+  style={{ 
+    display: 'block',
+    marginLeft: 'auto',
+    maxHeight: '80vh',
+    marginRight: 'auto'
+  }} 
+/>
+<p align="center">Retirado de: https://cdn.sparkfun.com/assets/learn_tutorials/1/6/MultipleCS_Updated2.png</p>
+<br/>
+
 :::tip[Mais Material de Referencia]
 
 - [Serial Peripheral Interface (SPI)](https://learn.sparkfun.com/tutorials/serial-peripheral-interface-spi/all)
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/MCi7dCBhVpQ?si=as_t3KqQ7nAq8Q3d" title="Video explica a comunicação SPI" frameborder="0" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen style={{display:"block", marginLeft:"auto", marginRight:"auto", marginBottom:"8px"}}></iframe>
 
 :::
 
 ## 3.3 Comunicação I2C - Inter-Integrated Circuit
 
+Ótimo, agora temos uma forma de nos comunicarmos que é assíncrona e outra que é síncrona. Não precisamos de mais nada! Pronto!
+
+
+
 :::tip[Mais Material de Referencia]
 
-- [A Basic Guide to I2C](https://www.ti.com/lit/an/sbaa565/sbaa565.pdf)
+- [I2C](https://learn.sparkfun.com/tutorials/i2c#why-use-i2c)
 
 :::
 
