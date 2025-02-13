@@ -556,6 +556,55 @@ Alguns pontos que valem a pena para verificarmos:
 
 Agora vamos estudar algumas implementações até que enfim! Claro que a teoria e compreender como os elementos funcionam é muito importante, mas conseguir colocar eles para funcionar também é uma etapa muito relevante do processo.
 
-Vamos trabalhar com algumas configurações. A primeira delas vai ser apenas um Arduino enviando alguns comandos na nossa porta serial. Esses elementos podem ser vistos pelo próprio monitor serial, ou utilizando algum programa que permita conectar com ela, como o [Termite](https://www.compuphase.com/software_termite.htm).
+Vamos trabalhar com algumas configurações. A primeira delas vai ser apenas um Arduino enviando alguns comandos na nossa porta serial. Esses elementos podem ser vistos pelo próprio monitor serial, ou utilizando algum programa que permita conectar com ela, como o [Termite](https://www.compuphase.com/software_termite.htm) ou o [PuTTY](https://www.putty.org/).
+
+Vamos para primeira implementação, para isso, vamos utilizar apenas um Arduino conectado ao computador.
+
+<img 
+  src="https://images.prismic.io/circuito/8e3a980f0f964cc539b4cbbba2654bb660db6f52_arduino-uno-pinout-diagram.png?auto=compress,format"
+  alt="Placa Arduino e suas conexões"
+  style={{ 
+    display: 'block',
+    marginLeft: 'auto',
+    maxHeight: '80vh',
+    marginRight: 'auto'
+  }} 
+/>
+<p align="center">Retirado de: https://images.prismic.io/circuito/8e3a980f0f964cc539b4cbbba2654bb660db6f52_arduino-uno-pinout-diagram.png?auto=compress,format</p>
+<br/>
+
+
+Quando olhamos para a placa, temos alguns pontos interessantes para observar. O primeiro deles está nos pinos zero (RX) e um (TX). Estes pinos tem algumas características especiais na placa que estamos utilizando. Eles são os responsáveis por fazer a comunicação entre os dispositivos, utilizando o hardware da comunicação serial. No caso da placa Arduino, eles também são utilizados quando enviamos uma nova versão do código para o controlador. 
+
+Vamos agora avaliar o primeiro código serial de comunicação:
+
+```c
+void setup() {
+  // put your setup code here, to run once:
+  Serial.begin(9600);
+  pinMode(13, OUTPUT);
+  digitalWrite(13, LOW);
+}
+
+void loop() {
+  // put your main code here, to run repeatedly:
+  if (Serial.available()){
+    char dado = char(Serial.read());
+    if (dado == 'L')
+      digitalWrite(13, HIGH);
+    else if(dado == 'D')
+      digitalWrite(13, LOW);
+  }
+}
+```
+
+Agora, com um programa para o terminal, conectar na porta para realizar a comunicação. Importante observar: não é necessário pressionar a tecla enter para enviar os dados, todos eles são transmitidos
 
 ## 5. Sugestão de Exercícios
+
+
+1. Desenvolver um programa que permita enviar e receber o estado do LED de saída quando solicitado pelo programa controlador. Construir o protocolo de comunicação. Acionar e desacionar o LED a cada 1 segundo. Utilizar o controlador que desejar.
+
+2. Implementar a mesma situação da comunicação anterior, mas agora, com 4 dispositivos. Cada dispositivo deve possuir um endereço específico e deve estar previsto no protocolo. Utilizar para a comunicação entre os dispositivos, comunicação SPI.
+
+3. Realizar o mesmo procedimento que no caso anterior, mas agora, utilizar comunicação I2C entre os dispositivos.
