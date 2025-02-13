@@ -6,7 +6,7 @@ slug: /protocols
 
 import Atmega8UART from '@site/static/img/atmega8-uart-blocks.png';
 
-# 1. Elementos de Comunicação
+## 1. Elementos de Comunicação
 
 Vamos voltar aos primórdios aqui e depois chegar na comunicação entre nossos dispositivos. Para isso, vamos primeiro pensar em um problema: ***como dois elementos conseguem se comunicar?***
 
@@ -37,7 +37,7 @@ Este mesmo conjunto de elementos é necessário no processo de comunicação ent
 
 Vamos estudar mais isso ao longo deste artigo, mas recomendo muito verificar esse vídeo:
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/d-zn-wv4Di8?si=mmGD-7R6j_C9AF5Z" title="Video que aprofunda o conceito de protocolos" frameborder="0" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen style={{display:"block", marginLeft:"auto", marginRight:"auto", marginBottom:"8px"}}></iframe>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/d-zn-wv4Di8?si=mmGD-7R6j_C9AF5Z" title="Video que aprofunda o conceito de protocolos" frameborder="0" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen style={{display:"block", width: "100%",  aspectRatio: "16/9", margin: "0 auto 8px auto"}}></iframe>
 
 :::
 
@@ -90,11 +90,11 @@ Um conceito importante para conhecermos enquanto estamos falando de comunicaçã
 
 :::tip[Para ver mais exemplos de tipos de comunicação]
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/RzAXEQ4XsSI?si=ZH-BjrakTYsHPjmf" title="Video que apresenta mais detalhes do modo de comunicação" frameborder="0" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen style={{display:"block", marginLeft:"auto", marginRight:"auto", marginBottom:"8px"}}></iframe>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/RzAXEQ4XsSI?si=ZH-BjrakTYsHPjmf" title="Video que apresenta mais detalhes do modo de comunicação" frameborder="0" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen style={{display:"block", width: "100%",  aspectRatio: "16/9", margin: "0 auto 8px auto"}}></iframe>
 
 :::
 
-# 2. Revisão de Programação C em Microcontroladores
+## 2. Revisão de Programação C em Microcontroladores
 
 Aqui vai vir um conjunto de revisão de programação de microcontroladores utilizando a ISA do Arduino. Está implementação traz um conjunto bastante grande de validações e simplificações que podemos utilizar. Para saber mais sobre ela:
 
@@ -113,7 +113,7 @@ Logo menos vou adicionar um pouco sobre ele aqui! Só um momento!!⌨️👓👌
 
 :::
 
-# 3. Protocolos de Comunicação
+## 3. Protocolos de Comunicação
 
 Vamos lá, existem diversos protocolos de comunicação que podem ser implementados. Cada um deles possui um conjunto de características que vamos estudar a seguir. Os tipos de comunicação que vamos ver:
 
@@ -125,11 +125,11 @@ Cabe destacar aqui que existem outras formas de comunicação, estas são alguma
 
 :::tip[Resumo]
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/IyGwvGzrqp8?si=4D8DsNwUVfGwhw0v" title="Video que resume os protocolos de comunicação serial, I2C e SPI" frameborder="0" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen style={{display:"block", marginLeft:"auto", marginRight:"auto", marginBottom:"8px"}}></iframe>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/IyGwvGzrqp8?si=4D8DsNwUVfGwhw0v" title="Video que resume os protocolos de comunicação serial, I2C e SPI" frameborder="0" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen style={{display:"block", width: "100%",  aspectRatio: "16/9", margin: "0 auto 8px auto"}}></iframe>
 
 :::
 
-## 3.1 Comunicação Serial
+### 3.1 Comunicação Serial
 
 Pessoal, vamos pensar em algumas formas como dois elementos podem trocar informações. Existe um forma que a troca de mensagens pode acontecer com uma via dedicada para cada um dos bits de informação. Este tipo de comunicação é chamada de `Comunicação Parelela`. O que acontece aqui, quando um sinal de clock (CLK) é enviado do transmissor para o receptor, o elemento receptor faz a leitura de todos os bits de uma vez.
 
@@ -257,12 +257,12 @@ Para a ***Comunicação Serial Assíncrona*** acontecer, é necessário configur
 
 Bits de paridade são bits adicionais inseridos no fim ou no início do quadro de dados em comunicações seriais para auxiliar na detecção de erros de transmissão. Em geral, o transmissor calcula se o número de bits “1” do pacote de dados é par ou ímpar e define o bit de paridade para manter o total coerente com a configuração (paridade par ou ímpar). Ao receber os dados, o dispositivo de destino faz a mesma contagem e, se houver discrepância, conclui que ocorreu um erro no envio. Para saber mais:
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/ehPOaV066VU?si=u5y4Q9HxwE17c5z8" title="Video que traz mais detalhes sobre a utilização de bits de paridade" frameborder="0" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen style={{display:"block", marginLeft:"auto", marginRight:"auto", marginBottom:"8px"}}></iframe>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/ehPOaV066VU?si=u5y4Q9HxwE17c5z8" title="Video que traz mais detalhes sobre a utilização de bits de paridade" frameborder="0" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen style={{display:"block", width: "100%",  aspectRatio: "16/9", margin: "0 auto 8px auto"}}></iframe>
 
 
 :::
 
-Agora vamos verificar o seguinte cenário: desejamos transmitir a letra "A", em ASCII pela porta serial. Vamos utilizar como configuração 9600 bits por segundo de velocidade, paridade par e um stop bit. Primeiro, vamos verificar como fica a letra "S", em binário. Consultando uma tabela ASCII (https://www.ascii-code.com/), que é uma forma de representar os símbolos e caracteres, podemos ver que a letra "S", pode ser representada por: "	01010011". Quando formos transmitir esse caractere, deve estar configurado entre o transmissor e o receptor a quantidade de bits que serão enviados, para o nosso exemplo, vamos considerar que serão enviados 8 bits por mensagem.
+Agora vamos verificar o seguinte cenário: desejamos transmitir a letra "S", em ASCII pela porta serial. Vamos utilizar como configuração 9600 bits por segundo de velocidade, paridade par e um stop bit. Primeiro, vamos verificar como fica a letra "S", em binário. Consultando uma tabela ASCII (https://www.ascii-code.com/), que é uma forma de representar os símbolos e caracteres, podemos ver que a letra "S", pode ser representada por: "	01010011". Quando formos transmitir esse caractere, deve estar configurado entre o transmissor e o receptor a quantidade de bits que serão enviados, para o nosso exemplo, vamos considerar que serão enviados 8 bits por mensagem.
 
 <img 
   src="https://www.robocore.net/upload/tutoriais/50_img_10_H.png?526"
@@ -326,7 +326,7 @@ Outro ponto importante é referente aos níveis de tensão utilizados por estes 
 
 Quando utilizamos um dispositivo de comunicação serial por uma porta USB, em geral este dispositivo instala um Driver no computador que diz ao sistema operacional que ali existe um elemento serial. Este dispositivo interpreta os sinais enviados pelo físico USB e converte eles para o padrão serial da porta UART e vice-versa. Este vídeo apresenta um pouco mais de detalhes de como estes dispositivos funcionam:
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/-NdmjdaMY3E?si=RHrJOxh5Sq0WDePy" title="Video explica os conversores USB para Serial" frameborder="0" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen style={{display:"block", marginLeft:"auto", marginRight:"auto", marginBottom:"8px"}}></iframe>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/-NdmjdaMY3E?si=RHrJOxh5Sq0WDePy" title="Video explica os conversores USB para Serial" frameborder="0" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen style={{display:"block", width: "100%",  aspectRatio: "16/9", margin: "0 auto 8px auto"}}></iframe>
 
 :::
 
@@ -388,11 +388,11 @@ Vamos cobrir outros dois tipos de comunicação serial, SPI e I2C.
 
 :::danger[Implementando o Timming da comunicação RS-232]
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/AHYNxpqKqwo?si=txItvmYXmPvxF-5d" title="Video implementa os frames de tempo da comunicação serial" frameborder="0" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen style={{display:"block", marginLeft:"auto", marginRight:"auto", marginBottom:"8px"}}></iframe>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/AHYNxpqKqwo?si=txItvmYXmPvxF-5d" title="Video implementa os frames de tempo da comunicação serial" frameborder="0" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen style={{display:"block", width: "100%",  aspectRatio: "16/9", margin: "0 auto 8px auto"}}></iframe>
 
 :::
 
-## 3.2 Comunicação SPI - Serial Peripheral Interface
+### 3.2 Comunicação SPI - Serial Peripheral Interface
 
 Por mais incrível que possam ser as aplicações que podemos fazer com a comunicação serial, ainda temos algumas limitações como:
 - **Número de dispositivo conectados**: mesmo que possam fazer broadcast da nossa mensagem, não foi um protocolo projetado para essa finalidade, quando pensamos no padrão RS-232. Outros padrões como o RS-422 e RS-485 até suportam este tipo de ligação;
@@ -480,11 +480,11 @@ Para utilizar mais dispositivos, é necessário utilizar o sinal de Chip-Select.
 
 - [Serial Peripheral Interface (SPI)](https://learn.sparkfun.com/tutorials/serial-peripheral-interface-spi/all)
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/MCi7dCBhVpQ?si=as_t3KqQ7nAq8Q3d" title="Video explica a comunicação SPI" frameborder="0" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen style={{display:"block", marginLeft:"auto", marginRight:"auto", marginBottom:"8px"}}></iframe>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/MCi7dCBhVpQ?si=as_t3KqQ7nAq8Q3d" title="Video explica a comunicação SPI" frameborder="0" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen style={{display:"block", width: "100%",  aspectRatio: "16/9", margin: "0 auto 8px auto"}}></iframe>
 
 :::
 
-## 3.3 Comunicação I2C - Inter-Integrated Circuit
+### 3.3 Comunicação I2C - Inter-Integrated Circuit
 
 Ótimo, agora temos uma forma de nos comunicarmos que é assíncrona e outra que é síncrona. Não precisamos de mais nada! Pronto!
 
@@ -548,12 +548,14 @@ Alguns pontos que valem a pena para verificarmos:
 
 - [I2C](https://learn.sparkfun.com/tutorials/i2c#why-use-i2c)
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/CAvawEcxoPU?si=CO96xVeY2bbX8Ilh" title="Video explica a comunicação I2C" frameborder="0" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen style={{display:"block", marginLeft:"auto", marginRight:"auto", marginBottom:"8px"}}></iframe>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/CAvawEcxoPU?si=CO96xVeY2bbX8Ilh" title="Video explica a comunicação I2C" frameborder="0" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen style={{display:"block", width: "100%",  aspectRatio: "16/9", margin: "0 auto 8px auto"}}></iframe>
 
 :::
 
-# 4. Hands-on
+## 4. Hands-on
+
+Agora vamos estudar algumas implementações até que enfim! Claro que a teoria e compreender como os elementos funcionam é muito importante, mas conseguir colocar eles para funcionar também é uma etapa muito relevante do processo.
 
 
 
-# 5. Sugestão de Exercícios
+## 5. Sugestão de Exercícios
