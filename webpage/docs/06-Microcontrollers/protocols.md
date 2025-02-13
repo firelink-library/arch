@@ -556,6 +556,6 @@ Alguns pontos que valem a pena para verificarmos:
 
 Agora vamos estudar algumas implementações até que enfim! Claro que a teoria e compreender como os elementos funcionam é muito importante, mas conseguir colocar eles para funcionar também é uma etapa muito relevante do processo.
 
-
+Vamos trabalhar com algumas configurações. A primeira delas vai ser apenas um Arduino enviando alguns comandos na nossa porta serial. Esses elementos podem ser vistos pelo próprio monitor serial, ou utilizando algum programa que permita conectar com ela, como o [Termite](https://www.compuphase.com/software_termite.htm).
 
 ## 5. Sugestão de Exercícios
