@@ -5,6 +5,7 @@ slug: /protocols
 ---
 
 import Atmega8UART from '@site/static/img/atmega8-uart-blocks.png';
+import ArduinosComSerial from '@site/static/img/comunicacao-entre-arduinos-uart.png';
 
 ## 1. Elementos de Comunicação
 
@@ -556,6 +557,8 @@ Alguns pontos que valem a pena para verificarmos:
 
 Agora vamos estudar algumas implementações até que enfim! Claro que a teoria e compreender como os elementos funcionam é muito importante, mas conseguir colocar eles para funcionar também é uma etapa muito relevante do processo.
 
+### 4.1 Serial (UART)
+
 Vamos trabalhar com algumas configurações. A primeira delas vai ser apenas um Arduino enviando alguns comandos na nossa porta serial. Esses elementos podem ser vistos pelo próprio monitor serial, ou utilizando algum programa que permita conectar com ela, como o [Termite](https://www.compuphase.com/software_termite.htm) ou o [PuTTY](https://www.putty.org/).
 
 Vamos para primeira implementação, para isso, vamos utilizar apenas um Arduino conectado ao computador.
@@ -598,7 +601,277 @@ void loop() {
 }
 ```
 
-Agora, com um programa para o terminal, conectar na porta para realizar a comunicação. Importante observar: não é necessário pressionar a tecla enter para enviar os dados, todos eles são transmitidos
+Agora, com um programa para o terminal, conectar na porta para realizar a comunicação. Importante observar: não é necessário pressionar a tecla enter para enviar os dados, todos eles são transmitidos.
+
+Agora vamos incrementar nosso desenvolvimento. Vamos colocar dois dispositivos conectados, trocando informações entre eles. O que está acontecendo aqui, um microcontrolador vai receber os dados pela porta serial de um computador, enviar eles na porta serial virtual. Quando ele realizar este envio, o outro microcontrolador vai replicar esses dados para o PC. 
+
+Nesta configuração tem algumas coisas interessantes para verificarmos. A primeira delas é que estamos utilizando duas portas Seriais para cada microcontrolador, uma física e outra virtual. A porta virtual é implementada em dois (2) pinos de entrada e saída digital, utilizando outros registradores e periféricos do microcontrolador. Para saber mais sobre a porta serial virtual, verificar a [documentação](https://docs.arduino.cc/learn/built-in-libraries/software-serial/#begin). O código que cada controlador utiliza é igual e está a seguir.
+
+<img 
+  src={ArduinosComSerial}
+  alt="Placa Arduino e suas conexões"
+  style={{ 
+    display: 'block',
+    marginLeft: 'auto',
+    maxHeight: '80vh',
+    marginRight: 'auto'
+  }} 
+/>
+<p align="center">Retirado de: Desenvolvido pelo Autor</p>
+<br/>
+
+```c
+#include <SoftwareSerial.h>
+
+SoftwareSerial portaVirtual (5,4);
+
+void setup() {
+  // put your setup code here, to run once:
+  Serial.begin(9600);  
+  portaVirtual.begin(9600);
+
+}
+
+void loop() {
+  // put your main code here, to run repeatedly:
+  if(Serial.available()){
+    char buffer = char(Serial.read());
+    portaVirtual.print(buffer);
+  }
+  if(portaVirtual.available()){
+    char buffer = char(portaVirtual.read());
+    Serial.print(buffer);
+    // Poderia ter vampetado
+  }
+}
+
+```
+
+ATENÇÃO: se essa comunicação não estiver rodando diretamente, verificar se os cabos RX e TX estão ligados corretamente.
+
+Agora vamos verificar mais algumas formas de comunicação.
+
+### 4.2 SPI
+
+Agora vamos fazer a configuração para escrever o estado recebido pela porta serial de um Arduino para o outro, utilizando SPI. Claramente essa configuração é um `Overkill` para a aplicação, mas vai nos permitir estudar como essa troca de mensagens acontece. Vamos avaliar um circuito similar ao que vamos utilizar, mas com algumas modificações.
+
+<img 
+  src="https://www.robocore.net/upload/tutoriais/61_fritz_H.png?935"
+  alt="Placa Arduino e suas conexões"
+  style={{ 
+    display: 'block',
+    marginLeft: 'auto',
+    maxHeight: '80vh',
+    marginRight: 'auto'
+  }} 
+/>
+<p align="center">Retirado de:https://www.robocore.net/upload/tutoriais/61_fritz_H.png?935</p>
+<br/>
+
+Aqui, o que mais interessa para nós é verificar quais pinos estão sendo utilizados pelo controlador e pelo periférico. 
+
+
+<img 
+  src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjaasVKNgEC6ciUBjjI9mPxiSjwi2kO9UeoD08vceDEupKhERfXj85DHZkovdtyjFQnHE4pIblL5bF3Run5GwzyOmAr7yGKsrPaJ1z4q71bDxGMkWd2erSjjNVEGxV5Ev1ek3iIgp4Yd55oC3ihOevfdd-zhF2caIGK57zyp528iuAhxDdNuoCB9TbUog/s492/SPI-Ad.png"
+  alt="Placa Arduino e suas conexões"
+  style={{ 
+    display: 'block',
+    marginLeft: 'auto',
+    maxHeight: '80vh',
+    marginRight: 'auto'
+  }} 
+/>
+<p align="center">Retirado de:https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjaasVKNgEC6ciUBjjI9mPxiSjwi2kO9UeoD08vceDEupKhERfXj85DHZkovdtyjFQnHE4pIblL5bF3Run5GwzyOmAr7yGKsrPaJ1z4q71bDxGMkWd2erSjjNVEGxV5Ev1ek3iIgp4Yd55oC3ihOevfdd-zhF2caIGK57zyp528iuAhxDdNuoCB9TbUog/s492/SPI-Ad.png</p>
+<br/>
+
+Agora vamos conectar os pinos para realizar a troca de informação. Vamos primeiro verificar o código do controlador.
+
+```c
+#include "SPI.h"
+
+#define ssPin 10 // pino seletor do periférico
+
+
+void setup() {
+  Serial.begin(9600);
+  Serial.println("Iniciando comunicação:");
+  SPI.begin();  // ingressa ao barramento SPI
+  
+  pinMode(ssPin, OUTPUT);  // configura o pino seletor do slave como saida
+  digitalWrite(ssPin, HIGH);  // coloca o pino seletor do slave em nivel alto
+}
+
+void loop() {
+  if (Serial.available()){
+    char dado = char(Serial.read());
+    // coloca o pino seletor do slave em nivel baixo iniciando a transmissao
+    digitalWrite(ssPin, LOW);
+    SPI.transfer(dado); 
+    digitalWrite(ssPin, HIGH); 
+    Serial.println("Dado Enviado!");
+  }
+}
+
+```
+Pontos interessantes para avaliarmos deste código:
+- Definimos qual o pino vai ser o Chip-Select. Enquanto o periférico não estiver recebendo dados, ele deve ficar em nível alto;
+- Quando alguma informação chega da porta serial, este dado é recebido e enviado para o barramento SPI;
+- Para realizar o envio, o periférico que deve receber o dado é acionado, o byte transmitido e então o CS é acionado novamente.
+
+Agora o código do periférico:
+
+```c
+#include "SPI.h"
+
+#define ledPin 13 // numero do pino onde o LED esta conectado
+
+char received_data; // armazena o dado recebidos
+volatile boolean received_flag; // flag de recebimento de dado
+
+void setup() {
+  // inicia a SPI no modo periférico
+  SPCR |= bit (SPE);
+  
+  // configura o pino MISO como saida
+  pinMode(MISO, OUTPUT);
+  
+  // prepara o flag de recebimento para interrupcao
+  received_flag = false;
+  
+  // liga as interrupcoes
+  SPI.attachInterrupt();
+
+  pinMode(ledPin, OUTPUT);  // configura o pino do LED como saida
+}
+
+void loop() {
+  // se o flag de recebimento for verdadeiro:
+  if (received_flag){
+    // se o byte recebido for igual a 0, apaga o LED
+    if (received_data == 'D') {
+      digitalWrite(ledPin, LOW);
+    }
+
+    // se o byte recebido for igual a 1 acende o LED
+    if (received_data == 'L') {
+      digitalWrite(ledPin, HIGH);
+    }
+
+    // limpa o flag de recebimento
+    received_flag = false;
+  }
+}
+
+// Rotina de interrupcao do SPI
+ISR (SPI_STC_vect) {
+  // le e salva o byte do Registrador de dados da SPI
+  received_data = SPDR; 
+
+  // seta o flag de recebimento para que o dado recebido 
+  // seja processado no proximo loop
+  received_flag = true;
+}
+
+```
+
+O código do periférico tem algumas finalidades a mais:
+- Setamos o dispositivo para ele se comportar como um periférico;
+- Iniciamos uma interrupção para quando alguma mensagem SPI for enviada. A interrupção tem a função de para a execução atual do programa e executar a sua rotina quando ela for acionada;
+- Quando a interrupção acontece, o bit que sinaliza de dados foram recebidos é acionado. O valor do registrados do SPI é carregado para a variável `received_flag`.
+- Na rotina principal, quando algum dado é recebido, ele é processado para verificar qual informação foi recebida. O flag utilizado para sinalizar a interrupção é zerado depois deste processamento.
+
+### 4.3 I2C
+
+Para estudarmos a comunicação I2C, vamos utilizar o exemplo do próprio site do [Arduino.cc](https://docs.arduino.cc/learn/communication/wire/). Aqui, diferente do que aconteceu com nosso exemplo de comunicação serial, vamos precisar de um código diferente para cada controlador, pois um vai fazer o papel de controlador da comunicação e o outro de periférico.
+
+<img 
+  src="https://docs.arduino.cc/static/069030eceac90efce7d31e05109464ad/29114/I2Cb2b.png"
+  alt="Placa Arduino e suas conexões"
+  style={{ 
+    display: 'block',
+    marginLeft: 'auto',
+    maxHeight: '80vh',
+    marginRight: 'auto'
+  }} 
+/>
+<p align="center">Retirado de:https://docs.arduino.cc/static/069030eceac90efce7d31e05109464ad/29114/I2Cb2b.png</p>
+<br/>
+
+No circuito, os pinos de `SDA` e `SCL` dos controladores são interligados, assim como a referência de `ground`. Agora vamos analisar o código necessário para realizar está comunicação.
+
+```c
+// Wire Controller Reader
+// by Nicholas Zambetti [http://www.zambetti.com](http://www.zambetti.com)
+
+// Demonstrates use of the Wire library
+// Reads data from an I2C/TWI peripheral device
+// Refer to the "Wire Peripheral Sender" example for use with this
+
+// Created 29 March 2006
+
+// This example code is in the public domain.
+
+
+#include <Wire.h>
+
+void setup() {
+  Wire.begin();        // join i2c bus (address optional for master)
+  Serial.begin(9600);  // start serial for output
+}
+
+void loop() {
+  Wire.requestFrom(8, 6);    // request 6 bytes from peripheral device #8
+
+  while (Wire.available()) { // peripheral may send less than requested
+    char c = Wire.read(); // receive a byte as character
+    Serial.print(c);         // print the character
+  }
+
+  delay(500);
+}
+```
+
+Uma vez mais, o exemplo que estamos analisando é da própria biblioteca do Arduino. A comunicação I2C é implementada pela biblioteca `Wire.h`. Quando iniciamos a comunicação, estamos utilizando os pinos padrões de `SDA` e `SCL`. A documentação completa da biblioteca pode ser acessada neste [link](https://docs.arduino.cc/language-reference/en/functions/communication/wire/).
+
+Quando nenhum endereço é fornecido ao método `Wire.begin()`, ele assume o papel de controlador. Quando um endereço é enviado para ele, ele assume o papel de um periférico. No `loop`, fazemos uma requisição de 6 bytes do endereço 8. É importante lembrar, que devemos informar a quantidade de bytes que desejamos ler, pois precisamos enviar os pulsos de clock para realizar está operação.
+
+Agora vamos analisar o código do periférico:
+
+```c
+// Wire Peripheral Sender
+// by Nicholas Zambetti [http://www.zambetti.com](http://www.zambetti.com)
+
+// Demonstrates use of the Wire library
+// Sends data as an I2C/TWI peripheral device
+// Refer to the "Wire Master Reader" example for use with this
+
+// Created 29 March 2006
+
+// This example code is in the public domain.
+
+
+#include <Wire.h>
+
+void setup() {
+  Wire.begin(8);                // join i2c bus with address #8
+  Wire.onRequest(requestEvent); // register event
+}
+
+void loop() {
+  delay(100);
+}
+
+// function that executes whenever data is requested by master
+// this function is registered as an event, see setup()
+void requestEvent() {
+  Wire.write("hello "); // respond with message of 6 bytes
+  // as expected by master
+}
+```
+
+Aqui os pontos que mais fazem sentindo observarmos:
+- Existe um endereço atribuído ao dispositivo na rede, portanto ele é um periférico;
+- Registramos uma função que é executada quando alguma requisição para o dispositivo é enviada.
 
 ## 5. Sugestão de Exercícios
 
