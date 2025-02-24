@@ -9,18 +9,108 @@ import Ttable1 from '@site/static/img/ttable1.png';
 import Ttable3 from '@site/static/img/ttable3.png';
 import Grey from '@site/static/img/grey.png';
 
-# Como criar (praticamente) qualquer circuito lógico
+# Introdução à circuitos lógicos
 
-Criar circuitos lógicos é uma tarefa fundamental no projeto de
-microprocessadores. Sendo assim, vamos conversar sobre como fazer isso? A má
-notícia é que não existe atalhos para criar circuitos lógicos. A boa é que
-existe uma ferramenta que gera (quase) sempre o circuito lógico mais otimizado
-possível. O nome dessa ferramenta é o mapa de Karnaugh, mas, para entendê-lo
-precisamos primeiro entender a tabela verdade.
+No século XIX, o matemático George Boole publicou o livro "*An investigation of
+the Laws of Thought*". O livro pontua seu interesse em formalizar um sistema
+algébrico - com símbolos e operações - para descrever a lógica. Até hoje, esse
+sistema é amplamente utilizado e recebe o nome de **algebra booleana**.
+
+A álgebra booleana baseia-se em variáveis que podem assumir apenas dois
+valores; **Verdadeiro** ou **Falso**. Com essas variáveis, é possível realizar
+as seguintes operações:
+
+1. Operação NOT - A operação de negação. Inverte o valor lógico de uma
+   variável.
+2. Operação AND - Operação de conjunção. Retorna verdadeiro apenas se todas as
+   variáveis envolvidas forem verdadeiras.
+3. Operação OR - Operação de disjunção. Retorna verdadeiro se pelo menos uma
+   das variáveis envolvidas for verdadeira.
+4. Operação XOR - Operação de exclusão. Retorna verdadeiro se apenas uma das
+   variáveis envolvidas for verdadeira.
+
+## 1. Princípios da algebra booleana
+
+<div style={{ textAlign: 'center' }}>
+    <iframe 
+        style={{
+            display: 'block',
+            margin: 'auto',
+            width: '100%',
+            height: '50vh',
+        }}
+        src="https://www.youtube.com/embed/EPJf4owqwdA" 
+        frameborder="0" 
+        allowFullScreen>
+    </iframe>
+</div>
+
+Assim como a álgebra à qual estamos acostumados, as operações típicas da
+álgebra booleana podem ser expressas utilizando símbolos. A saber:
+
+* A operação **AND** empresta o símbolo da operação de multiplicação (. ou  x);
+* A operação **OR** empresta o símbolo da operação de soma (+);
+* A operação **NOT** aparece como um traço sobre a variável (e.g.
+  $\overline{A}$);
+* A operação **XOR** utiliza o operador $\oplus$.
+
+Também de forma análoga à álgebra convencional, há uma série de propriedades
+que permitem que uma expressão lógica seja simplificada.
+
+<img 
+  src="https://www.electronics-tutorials.ws/wp-content/uploads/2022/09/boolean-algebra-table.jpg?fit=600%2C355"
+  alt="XOR"
+  style={{ 
+    display: 'block',
+    marginLeft: 'auto',
+    maxHeight: '40vh',
+    marginRight: 'auto'
+  }} 
+/>
+<br/>
+<p><center>Fig. - Propriedades da álgebra booleana.</center></p>
+
+<div style={{ textAlign: 'center' }}>
+    <iframe 
+        style={{
+            display: 'block',
+            margin: 'auto',
+            width: '100%',
+            height: '50vh',
+        }}
+        src="https://www.youtube.com/embed/XMCW6NFLMsg" 
+        frameborder="0" 
+        allowFullScreen>
+    </iframe>
+</div>
+
+:::tip Exercício
+
+Uma propriedade interessante dos teoremas descritos acima (em particular o de
+DeMorgan) é que ele torna a função lógica **NAND** funcionalmente completa;
+isto significa que qualquer expressão lógica pode ser convertida em uma
+expressão que utiliza apenas a porta **NAND**. Vamos tentar provar isso?
+
+Converta as portas lógicas a seguir de modo que elas sejam funcionalmente
+replicadas utilizando apenas portas **NAND**:
+
+* NOT
+* AND
+* OR
+* XOR
+
+Como um exercício extra - pesquise por que essa propriedade é interessante na
+construção de chips de endereçamento de memória.
+
+:::
+
+Na eletrônica digital, os circuitos que utilizam apenas combinações de
+operadores lógicos são denominados de **circuitos combinatórios**. Eles formam
+a base para as operações lógicas e aritméticas de uma CPU. Uma das ferramentas
+mais úteis para avaliar o comportamento de um circuito combinatório é a
+**tabela verdade**.
 
 ## 1. A tabela verdade
-
-:::info Autoestudo obrigatório
 
 <div style={{ textAlign: 'center' }}>
     <iframe 
@@ -35,8 +125,6 @@ precisamos primeiro entender a tabela verdade.
         allowFullScreen>
     </iframe>
 </div>
-
-:::
 
 As tabelas verdade são uma ferramenta muito simples em sua essência: a sua
 razão de existir é mapear todas as combinações de entrada possíveis de um
@@ -111,7 +199,7 @@ simplificá-la, mas vamos praticar o desapego até que a gente aprenda a usar o
 mapa de karnaugh? Beleza, boa. Mas antes disso, quero que você pratique com
 mais duas tabelas verdade.
 
-:::tip Exercício 5.01
+:::tip Exercício
 
 Baseando-se na tabela verdade abaixo, crie uma equação lógica que a represente.
 
@@ -128,7 +216,7 @@ Baseando-se na tabela verdade abaixo, crie uma equação lógica que a represent
 
 :::
 
-:::tip Exercício 5.02
+:::tip Exercício
 
 Baseando-se na tabela verdade abaixo, crie uma equação lógica que a represente.
 
