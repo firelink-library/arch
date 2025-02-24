@@ -110,7 +110,7 @@ a base para as operações lógicas e aritméticas de uma CPU. Uma das ferrament
 mais úteis para avaliar o comportamento de um circuito combinatório é a
 **tabela verdade**.
 
-## 1. A tabela verdade
+## 2. A tabela verdade
 
 <div style={{ textAlign: 'center' }}>
     <iframe 
