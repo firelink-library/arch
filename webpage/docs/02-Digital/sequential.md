@@ -296,7 +296,7 @@ A transferência paralela de dados acontece quando os dados são carregados dire
 
 ### 3.2 Transferência Serial de Dados: Registradores de Deslocamento
 
-Os registradores de deslocamento são um conjunto de flipflops organizados de mode que os números binários, as informações, armazenadas neles possam ser deslocados de para o próximo flipflop a cada pulso de clock. Essa operação acontece em diversos outros elementos, como quando estamos utilizando um calculadora, ao digitar um novo número, os números anteriores são deslocados para o lado para que ele possa ser inserido no display.
+Os registradores de deslocamento são um conjunto de flipflops organizados de modo que os números binários, as informações, armazenadas neles possam ser deslocados de para o próximo flipflop a cada pulso de clock. Essa operação acontece em diversos outros elementos, como quando estamos utilizando um calculadora, ao digitar um novo número, os números anteriores são deslocados para o lado para que ele possa ser inserido no display.
 
 Analisando o circuito abaixo, temos um registrador de dados serial de 4 bits. Cada um dos flipflops do sistema é responsável por armazenar um bit de informação. Este circuito tem uma característica interessante: sua saída pode ser recebida de forma serial (no último registrador - `QD`), ou de forma paralela, pegando a saída de cada um dos flipflops do sistema. Todos os sinais de clock e clear estão ligados em uma fonte comum, portanto, quando um destes sinais for enviado, ele vai ser percebido por todos os dispositivos do sistema.
 
