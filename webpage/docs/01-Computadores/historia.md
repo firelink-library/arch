@@ -6,6 +6,40 @@ slug: /history
 
 # Como surgiram os computadores
 
+<details>
+  <summary>Hadestown - Anaïs Mitchell</summary>
+
+  <center>![](https://upload.wikimedia.org/wikipedia/en/b/be/Hadestown_A-Mitchell.jpg)</center>
+
+  Uma semente do que mais tarde viraria o espetáculo da Broadway de mesmo nome,
+  Hadestown é um album de folk que reconta a história de Orfeu e Eurídice com
+  uma roupagem mais moderna. Os deuses dão vez a um sistema opressor que criou
+  um inferno na terra e a "morte" de Eurídice vira o ímpeto de ir para um lugar
+  onde se pode ganhar mais dinheiro. 
+
+  Poucos álbuns conseguem mesclar tantos estilos e artistas e ainda assim
+  manter uma coesão temática tão forte quanto Hadestown. Menos ainda conseguem
+  construir uma narrativa musical, é um album que se ouve quase como uma ópera
+  do começo ao fim. Junta isso a uma das histórias de amor mais famosas (e
+      trágicas) da história e temos cinema absoluto... em áudio.
+
+  <div style={{ textAlign: 'center' }}>
+      <iframe 
+          style={{
+              display: 'block',
+              margin: 'auto',
+              width: '100%',
+              height: '50vh',
+          }}
+          src="https://www.youtube.com/embed/JoeqvPuHwO8" 
+          frameborder="0" 
+          allowFullScreen>
+      </iframe>
+  </div>
+  <br/>
+
+</details>
+
 Quando falamos de computação, muitas vezes é importante deixarmos de lado todas
 as diferentes aplicações e aplicativos que fundamentalmente só funcionam com
 recursos computacionais para focar apenas **no que é a computação**. O termo

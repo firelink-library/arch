@@ -6,6 +6,41 @@ slug: /transistor
 
 import Porta1 from '@site/static/img/porta1.png';
 
+<details>
+  <summary>The Summer Hikaru Died - Cygames Pictures</summary>
+
+  <center>![](https://upload.wikimedia.org/wikipedia/en/5/5a/The_Summer_Hikaru_Died_volume_1_cover.jpg)</center>
+
+  Hikaru era o melhor amigo de Yoshiki até que em um verão ele some nas
+  montanhas perto da cidade onde moram e só é encontrado uma semana depois. O
+  único problema é que quem voltou das montanhas não é o Hikaru.
+
+  The Summer Hikaru died até agora entregou uma história que explora muito bem
+  o conflito de Yoshiki entre o amor fraterno ao melhor amigo dele - que é tão 
+  forte que ele não consegue se desapegar nem mesmo quando percebe que o que 
+  habita o corpo de Hikaru é um monstro - e o genuíno medo do monstro 
+  lovecraftiano que ameaça todos da cidade em que eles moram. Coloca na equação
+  um exorcista estranho com uma pegada de Reigen que parece saber de uma 
+  história que vincula a criatura a algum segredo antigo da cidade e temos
+  algo bem interessante e único para assistir =)
+
+  <div style={{ textAlign: 'center' }}>
+      <iframe 
+          style={{
+              display: 'block',
+              margin: 'auto',
+              width: '100%',
+              height: '50vh',
+          }}
+          src="https://www.youtube.com/embed/dhihVoP_6gw" 
+          frameborder="0" 
+          allowFullScreen>
+      </iframe>
+  </div>
+  <br/>
+
+</details>
+
 # O transistor e sua função no computador
 
 Vamos voltar um pouco no tempo, para 1947. Estamos nos Estados Unidos, no Bell
