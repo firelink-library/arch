@@ -7,7 +7,7 @@ import catppuccin from '@catppuccin/starlight';
 export default defineConfig({
   site: 'https://firelink-library.github.io',
   base: '/arch',
-  outDir: 'public',
+  outDir: 'dist',
   publicDir: 'static',
   favicon: './src/assets/logos/logo.png',
 	integrations: [
