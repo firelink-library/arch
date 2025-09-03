@@ -1,50 +1,49 @@
----
-sidebar_position: 1
-slug: /
----
+# Starlight Starter Kit: Basics
 
-# Introdução
+[![Built with Starlight](https://astro.badg.es/v2/built-with-starlight/tiny.svg)](https://starlight.astro.build)
 
-Este é apenas um template para você poder criar um repositório de conteúdo
-rapidamente e com uma configuração opinionada do Docusaurus.
-
-Neste repositório, já estão configurados:
-
-* A base do docusaurus, que fica dentro do diretório `webpage`
-
-## 1. O que você precisa fazer
-
-### 1.1. Modificar o nome da página
-
-## 2. O que você pode querer fazer
-
-Não vou delinear todas as funcionalidades do docusaurus. Para isso, existe a
-[documentação do docusaurus](https://docusaurus.io/docs/next). No entanto, há
-algumas coisas que você pode querer fazer e que são esperadas pela natureza do
-conteúdo que vamos publicar aqui. Para essas, vou deixar um pequeno tutorial.
-
-### 2.1. Adicionando equações `LaTeX`
-
-**Inline**
-
-```LaTeX
-Let $f\colon[a,b]\to\R$ be Riemann integrable. Let $F\colon[a,b]\to\R$ be
-$F(x)=\int_{a}^{x} f(t)\,dt$. Then $F$ is continuous, and at all $x$ such that
-$f$ is continuous at $x$, $F$ is differentiable at $x$ with $F'(x)=f(x)$.
+```
+npm create astro@latest -- --template starlight
 ```
 
-Let $f\colon[a,b]\to\R$ be Riemann integrable. Let $F\colon[a,b]\to\R$ be
-$F(x)=\int_{a}^{x} f(t)\,dt$. Then $F$ is continuous, and at all $x$ such that
-$f$ is continuous at $x$, $F$ is differentiable at $x$ with $F'(x)=f(x)$.
+> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
 
-**Bloco**
+## 🚀 Project Structure
 
-```LaTeX
-$$
-I = \int_0^{2\pi} \sin(x)\,dx
-$$
+Inside of your Astro + Starlight project, you'll see the following folders and files:
+
+```
+.
+├── public/
+├── src/
+│   ├── assets/
+│   ├── content/
+│   │   └── docs/
+│   └── content.config.ts
+├── astro.config.mjs
+├── package.json
+└── tsconfig.json
 ```
 
-$$
-I = \int_0^{2\pi} \sin(x)\,dx
-$$
+Starlight looks for `.md` or `.mdx` files in the `src/content/docs/` directory. Each file is exposed as a route based on its file name.
+
+Images can be added to `src/assets/` and embedded in Markdown with a relative link.
+
+Static assets, like favicons, can be placed in the `public/` directory.
+
+## 🧞 Commands
+
+All commands are run from the root of the project, from a terminal:
+
+| Command                   | Action                                           |
+| :------------------------ | :----------------------------------------------- |
+| `npm install`             | Installs dependencies                            |
+| `npm run dev`             | Starts local dev server at `localhost:4321`      |
+| `npm run build`           | Build your production site to `./dist/`          |
+| `npm run preview`         | Preview your build locally, before deploying     |
+| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
+| `npm run astro -- --help` | Get help using the Astro CLI                     |
+
+## 👀 Want to learn more?
+
+Check out [Starlight’s docs](https://starlight.astro.build/), read [the Astro documentation](https://docs.astro.build), or jump into the [Astro Discord server](https://astro.build/chat).
