@@ -32,6 +32,7 @@ export default defineConfig({
           { label: 'Lógica Combinacional', autogenerate: { directory: 'combinatory' }, collapsed: true },
           { label: 'Lógica Sequencial', autogenerate: { directory: 'sequential' }, collapsed: true },
           { label: 'Memória', autogenerate: { directory: 'memory' }, collapsed: true },
+          { label: 'Aritmética', autogenerate: { directory: 'arithmetic' }, collapsed: true },
 			],
 		}),
 	],
