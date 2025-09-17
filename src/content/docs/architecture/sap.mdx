@@ -1,7 +1,8 @@
 ---
 title: Simple as possible
-sidebar_position: 2
-slug: /sap
+sidebar:
+    order: 2
+slug: sap
 ---
 
 # Simple As Possible Architecture
@@ -12,18 +13,7 @@ sobre o assunto, o *Digital Computer Electronics*, de *Albert Malvino*. Nesse
 livro, Malvino apresenta a arquitetura SAP. A figura 14.01 exibe a arquitetura
 proposta para o SAP I.
 
-<img 
-  src={"../../../assets/img/archsap.png"}
-  alt="ArchSAP"
-  style={{ 
-    display: 'block',
-    marginLeft: 'auto',
-    maxHeight: '80vh',
-    marginRight: 'auto'
-  }} 
-/>
-<br/>
-<p><center>Fig 14.01 - Diagrama de blocos da arquitetura do SAP I.</center></p>
+<center>![](../../../assets/img/archsap.png)</center>
 
 ## 1. Componentes do SAP I
 
@@ -135,65 +125,22 @@ controle para cada um dos outros componentes da CPU. Para isso, ela controla
 diretamente os sinais de Clk e Clr e também conta com uma **palavra de
 controle**. Essa palavra de controle pode ser vista na figura 14.02.
 
-<img 
-  src={"../../../assets/img/controlword.png"}
-  alt="ControlWord"
-  style={{ 
-    display: 'block',
-    marginLeft: 'auto',
-    maxHeight: '80vh',
-    marginRight: 'auto'
-  }} 
-/>
-<br/>
-<p><center>Fig 14.02 - Palavra de controle do SAP I. Com esses 12 bits, o
-circuito de controle comanda os outros componentes do SAP I.</center></p>
+<center>![](../../../assets/img/controlword.png)</center>
 
 ## 2. Instruções do SAP I
 
 O conjunto de instruções do SAP I é bastante enxuto, consistindo em apenas 5
 operações. As figuras 14.03 e 14.04 exibem essas operações possíveis.
 
-<img 
-  src={"../../../assets/img/sapiset.jpg"}
-  alt="SapIset"
-  style={{ 
-    display: 'block',
-    marginLeft: 'auto',
-    maxHeight: '50vh',
-    marginRight: 'auto'
-  }} 
-/>
-<br/>
-<p><center>Fig 14.03 - Tabela com os nomes das opearções do SAP I.</center></p>
+<center>![](../../../assets/img/sapiset.jpg)</center>
 
-<img 
-  src={"../../../assets/img/sapopcodes.jpg"}
-  alt="SapOpCodes"
-  style={{ 
-    display: 'block',
-    marginLeft: 'auto',
-    maxHeight: '50vh',
-    marginRight: 'auto'
-  }} 
-/>
-<br/>
-<p><center>Fig 14.04 - Tabela com os *opcodes* do SAP I.</center></p>
+<center>![](../../../assets/img/sapopcodes.jpg)</center>
 
 :::tip Exercício 14.01
 
 Resolva o seguinte exercício do livro do Malvino.
 
-<img 
-  src={"../../../assets/img/malvino.jpg"}
-  alt="SapOpCodes"
-  style={{ 
-    display: 'block',
-    marginLeft: 'auto',
-    maxHeight: '50vh',
-    marginRight: 'auto'
-  }} 
-/>
+<center>![](../../../assets/img/malvino.jpg)</center>
 
 :::
 
@@ -206,18 +153,7 @@ dos ciclos do SAP I é a utilização de um *Ring Counter* para definir **seis
 estados** distintos para a unidade de controle. A figura 14.05 exibe o ring
 counter do SAP I e a carta de tempos dos seus estados.
 
-<img 
-  src={"../../../assets/img/ringcounter.jpg"}
-  alt="RingCounter"
-  style={{ 
-    display: 'block',
-    marginLeft: 'auto',
-    maxHeight: '70vh',
-    marginRight: 'auto'
-  }} 
-/>
-<br/>
-<p><center>Fig 14.05 - O Ring Counter do SAP I.</center></p>
+<center>![](../../../assets/img/ringcounter.jpg)</center>
 
 Os três primeiros estados gerados pelo ring counter formam o *ciclo de fetch*
 da CPU. São eles os estados *T1*, *T2* e *T3*. Vamos analisar cada um deles em
@@ -229,18 +165,7 @@ O *Address State* é o primeiro estado do ciclo do SAP I. Nele, o endereço que
 está no *PC* é transferido para o *MAR*. A palavra de controle, nesse momento,
 fica como descrito na figura 14.06:
 
-<img 
-  src={"../../../assets/img/statet1.jpg"}
-  alt="StateT1"
-  style={{ 
-    display: 'block',
-    marginLeft: 'auto',
-    maxHeight: '50vh',
-    marginRight: 'auto'
-  }} 
-/>
-<br/>
-<p><center>Fig 14.06 - Estado da palavra de controle em T1.</center></p>
+<center>![](../../../assets/img/statet1.jpg)</center>
 
 
 **Increment State (T2)**
@@ -248,18 +173,7 @@ fica como descrito na figura 14.06:
 O increment state existe para que o *PC* seja incrementado em uma unidade. A
 figura 14.07 mostra a palavra de controle necessária para que isso aconteça.
 
-<img 
-  src={"../../../assets/img/statet2.jpg"}
-  alt="StateT2"
-  style={{ 
-    display: 'block',
-    marginLeft: 'auto',
-    maxHeight: '50vh',
-    marginRight: 'auto'
-  }} 
-/>
-<br/>
-<p><center>Fig 14.07 - Estado da palavra de controle em T2.</center></p>
+<center>![](../../../assets/img/statet2.jpg)</center>
 
 **Memory State (T3)**
 
@@ -267,36 +181,13 @@ O memory state marca o fim do ciclo de fetch. Nele, a instrução resgatada na
 *RAM* é transferida para o *IR*. O estado da palavra de controle pode ser visto
 na figura 14.08.
 
-<img 
-  src={"../../../assets/img/statet3.jpg"}
-  alt="StateT3"
-  style={{ 
-    display: 'block',
-    marginLeft: 'auto',
-    maxHeight: '50vh',
-    marginRight: 'auto'
-  }} 
-/>
-<br/>
-<p><center>Fig 14.08 - Estado da palavra de controle em T3.</center></p>
+<center>![](../../../assets/img/statet3.jpg)</center>
 
 Juntos, os estados T1, T2 e T3 formam o ciclo de fetch do SAP I. A figura 14.09
 exibe o diagrama de blocos dos componentes do processador em cada um dos
 estados deste ciclo.
 
-<img 
-  src={"../../../assets/img/fetchcycle.jpg"}
-  alt="FetchCycle"
-  style={{ 
-    display: 'block',
-    marginLeft: 'auto',
-    maxHeight: '80vh',
-    marginRight: 'auto'
-  }} 
-/>
-<br/>
-<p><center>Fig 14.09 - O estado do SAP I em cada etapa do ciclo de fetch. Em
-a), temos o T1. Em b), temos o T2 e em c) temos o T3.</center></p>
+<center>![](../../../assets/img/fetchcycle.jpg)</center>
 
 ## 4. Ciclo de Execute
 
@@ -306,19 +197,7 @@ um exemplo, a figura 14.10 exibe os estados T4, T5 e T6 para a instrução *LDA*
 Note que, para esta operação, o estado T6 é um estado sem nenhum tipo de
 operação.
 
-<img 
-  src={"../../../assets/img/ldacycle.jpg"}
-  alt="LDACycle"
-  style={{ 
-    display: 'block',
-    marginLeft: 'auto',
-    maxHeight: '80vh',
-    marginRight: 'auto'
-  }} 
-/>
-<br/>
-<p><center>Fig 14.10 - As etapas T4, T5 e T6 para a operação
-*LDA*.</center></p>
+<center>![](../../../assets/img/ldacycle.jpg)</center>
 
 :::tip Exercício 14.02
 

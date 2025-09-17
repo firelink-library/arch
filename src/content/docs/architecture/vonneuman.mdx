@@ -1,7 +1,8 @@
 ---
 title: Arquitetura de von Neumann
-sidebar_position: 1
-slug: /vonneumann
+sidebar:
+    order: 1
+slug: vonneumann
 ---
 
 # As máquinas de von Neumann
@@ -80,17 +81,7 @@ eletrônico chamado *EDVAC*, a proposta de von Neumann pode ser resumida em
 Levando em consideração a proposta acima, a figura 12.03 apresenta um diagrama
 de blocos atualizado para a arquitetura de von Neumann.
 
-<img 
-  src={"../../../assets/img/vonneumann.png"}
-  alt="vonneumannarch"
-  style={{ 
-    display: 'block',
-    marginLeft: 'auto',
-    maxHeight: '35vh',
-    marginRight: 'auto'
-  }} 
-/>
-<br/>
+<center>![](../../../assets/img/vonneumann.png)</center>
 <p><center>Fig 12.03 - Diagrama de blocos atualizado da arquitetura de von
 Neumann.</center></p>
 
@@ -135,19 +126,7 @@ von Neumann, o **IAS**.
 
 A figura 12.04 exibe o diagrama de blocos de operação do IAS.
 
-<img 
-  src={"../../../assets/img/ias.png"}
-  alt="IAS"
-  style={{ 
-    display: 'block',
-    marginLeft: 'auto',
-    maxHeight: '80vh',
-    marginRight: 'auto'
-  }} 
-/>
-<br/>
-<p><center>Fig 12.04 - Diagrama de blocos simplificado da arquitetura do
-IAS.</center></p>
+<center>![](../../../assets/img/ias.png)</center>
 
 Eu sei, eu sei. É muita coisa de uma vez só. Peço apenas para que tenha essa
 imagem em mente enquanto discutimos aspectos específicos da operação do IAS e
@@ -213,20 +192,7 @@ instrução da direita. Cada uma delas ocupa 20 bits. Para cada instrução, há
 divisão de *8 bits* para o *opcode* e os *12 bits* restantes para um endereço
 de operando/nova instrução. A figura 12.05 representa esse tipo de palavra.
 
-<img 
-  src={"../../../assets/img/instrword.png"}
-  alt="IWord"
-  style={{ 
-    display: 'block',
-    marginLeft: 'auto',
-    maxHeight: '15vh',
-    marginRight: 'auto'
-  }} 
-/>
-<br/>
-<p><center>Fig 12.05 - A palavra de instrução do IAS tem 40 bits, sendo 20 bits
-para cada uma das instruções. O opcode é armazenado em 8 bits e o endereço é
-armazenado em 12 bits.</center></p>
+<center>![](../../../assets/img/instrword.png)</center>
 
 **Palavra de número**
 
@@ -234,19 +200,7 @@ A palavra de número é consideravelmente mais simples. Ela conta apenas com um
 bit de sinal e *39 bits* para o valor numérico. Aqui é interessante notar que o
 IAS usa a representação de *complemento de dois* para os números negativos.
 
-<img 
-  src={"../../../assets/img/numberword.png"}
-  alt="NWord"
-  style={{ 
-    display: 'block',
-    marginLeft: 'auto',
-    maxHeight: '15vh',
-    marginRight: 'auto'
-  }} 
-/>
-<br/>
-<p><center>Fig 12.06 - A palavra de número usa apenas um bit para representar o
-sinal e os outros 39 bits para o valor numérico.</center></p>
+<center>![](../../../assets/img/numberword.png)</center>
 
 ### 2.3. Instruções do IAS
 
@@ -268,18 +222,7 @@ em:
 
 A figura 12.07 apresenta a tabela completa de instruções do IAS.
 
-<img 
-  src={"../../../assets/img/iastable.png"}
-  alt="IASTable"
-  style={{ 
-    display: 'block',
-    marginLeft: 'auto',
-    maxHeight: '80vh',
-    marginRight: 'auto'
-  }} 
-/>
-<br/>
-<p><center>Fig 12.07 - Tabela completa de instruções do IAS.</center></p>
+<center>![](../../../assets/img/iastable.png)</center>
 
 :::tip Exercício 12.01
 
@@ -336,20 +279,7 @@ A figura 12.08 representa o fluxograma de execução do IAS, porém omitindo o
 ciclo de execução. Dessa forma, conseguimos estudar isoladamente o
 comportamento do ciclo de busca.
 
-<img 
-  src={"../../../assets/img/fetchcycle.jpg"}
-  alt="FetchCycle"
-  style={{ 
-    display: 'block',
-    marginLeft: 'auto',
-    maxHeight: '100vh',
-    marginRight: 'auto'
-  }} 
-/>
-<br/>
-<p><center>Fig 12.08 - Fluxograma do ciclo de busca do IAS. Basicamente, o
-algoritmo consiste em buscar a próxima instrução da memória ou da IBR e guardar
-o código de operação no IR e o endereço do operando em MAR.</center></p>
+<center>![](../../../assets/img/fetchcycle.jpg)</center>
 
 **Ciclo de execução**
 
@@ -358,20 +288,7 @@ a ser tomada baseando-se no código de operação armazenado em *IR*. Em nome da
 simplicidade, o fluxograma foi simplificado para não considerar todas as 21
 operações da IAS.
 
-<img 
-  src={"../../../assets/img/executeflow.png"}
-  alt="ExecuteCycle"
-  style={{ 
-    display: 'block',
-    marginLeft: 'auto',
-    maxHeight: '100vh',
-    marginRight: 'auto'
-  }} 
-/>
-<br/>
-<p><center>Fig 12.08 - Fluxograma do ciclo de busca do IAS. Basicamente, o
-algoritmo consiste em buscar a próxima instrução da memória ou da IBR e guardar
-o código de operação no IR e o endereço do operando em MAR.</center></p>
+<center>![](../../../assets/img/executeflow.png)</center>
 
 :::tip Exercício 12.03
 
