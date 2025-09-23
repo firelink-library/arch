@@ -1,0 +1,63 @@
+---
+title: CPU 8 bits
+slug: pond-cpu
+---
+
+## 1. Enunciado
+
+**O que?**
+
+Nesta ponderada, você precisará criar uma CPU simplificada de 8 bits. 
+
+Para isso, é necessário ter uma **ALU** com as seguintes operações:
+
+* Soma;
+* Subtração;
+* Multiplicação (operandos de 4 bits);
+* Incremento;
+* Decremento;
+* Divisão (operandos de 4 bits);
+
+Para operacionalizar o restante da CPU, deve haver um **circuito de controle**
+capaz de implementar os ciclos de **fetch** e **execute**. Há mais três
+operações que precisam ser implementadas puramente como lógica de controle:
+
+* LOAD (opcional ter uma operação específica para isso - pode usar a soma);
+* Jump incondicional;
+* Jump condicional (salta quando o acumulador tem o valor 0);
+
+O tamanho do barramento de dados e da palavra de instrução é uma escolha sua.
+
+Sugere-se o uso de um bloco de memória ROM para simular a RAM (para que o
+conteúdo da memória não resete a cada simulação).
+
+A saída da CPU deve ser com displays de 7 segmentos com a capacidade de mostrar
+números positivos ou negativos. A saída utilizada para esses displays pode ser
+o registrador **acumulador**.
+
+O sistema deve ter um sinal de clock unificado.
+
+**Especificações de entrega**
+
+A melhor forma de garantir que você aprendeu alguma coisa no processo é se
+esforçando para explicar os conceitos envolvidos. Sendo assim, considera-se
+entregue a atividade que conte, também, com um vídeo explicativo sobre o
+processo de desenvolvimento da CPU. Seja sucinto (sugiro roteirizar); Sugere-se
+uma duração de não mais do que 5 minutos de vídeo.
+
+**Padrão de qualidade**
+
+A implementação de toda a CPU vale até 10 pontos. Desses 10 pontos, divide-se:
+
+* ALU funcional com todas as operações vale até 6,0 pontos;
+* Ciclo de fetch vale até 2,0 pontos;
+* Ciclo de execute vale até 2,0 pontos;
+
+Uma CPU sem as operações de divisão e saltos (condicional e incondicional), mas
+com todas as outras operações funcionais e com ciclo de fetch e execute
+funcionais vale até 8,0 pontos. Nessa situação, a divisão passa a ser:
+
+* ALU funcional sem divisão e saltos vale até 4,0 pontos;
+* Ciclo de fetch vale até 2,0 pontos;
+* Ciclo de execute vale até 2,0 pontos;
+
