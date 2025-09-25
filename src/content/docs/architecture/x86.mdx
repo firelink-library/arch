@@ -5,6 +5,8 @@ sidebar:
 slug: x86
 ---
 
+## 1. A história e evolução do x86
+
 <div style={{ textAlign: 'center' }}>
     <iframe 
         style={{
@@ -19,12 +21,79 @@ slug: x86
     </iframe>
 </div>
 
-Ainda não criei o resto do texto. Enquanto não adiciono esse material, sugiro
-ler o tópico 14.5 do livro *Arquitetura e Organização de Computadores*, do
-**William Stallings**.
+## 2. Gerenciamento de memória x86
 
-## 1. O 8086
+O gerenciamento de memória dos processadores da família *x86* apresenta dois
+conceitos importantes: **paginação** e **segmentação**.
 
-## 2. O conjunto de instruções x86
+### 2.1. Paginação
 
-## 3. Tipos de endereçamento
+O conceito de **paginação** é amplamente utilizado em *processadores* e é uma
+das maneiras como é possível que *sistemas operacionais* permitam o uso do que
+chamamos de **memória virtual**. Sua explicação completa será feita em outra
+seção, mas por enquanto vamos explorá-la de modo superficial.
+
+<center>![](https://assets.enterprisestorageforum.com/uploads/2021/02/paging-and-segmentation_6019c4f207ec5.png)</center>
+
+A **paginação** é uma técnica de gerenciamento de memória na qual o espaço de
+endereçamento lógico de um processo é dividido em blocos de tamanho fixo
+chamados **páginas**, enquanto a memória física é dividida em blocos de mesmo
+tamanho chamados **quadros** (ou *frames*). Essa correspondência entre páginas
+e quadros é registrada em uma **tabela de páginas**, que permite ao processador
+traduzir endereços lógicos em endereços físicos de forma eficiente. Dessa
+maneira, a paginação possibilita que programas utilizem mais memória do que
+aquela fisicamente disponível, além de oferecer isolamento entre processos e
+facilitar a implementação da memória virtual.
+
+### 2.2. Segmentação
+
+Por outro lado, a segmentação é uma estratégia introduzida pela família *x86* e
+apresenta uma separação feita por *segmentos* **antes** da paginação. A
+segmentação tem algumas vantagens, a saber:
+
+- **Organização mais natural da memória**
+- **Isolamento e proteção**
+- **Facilidade de compartilhamento**
+
+Vamos explorar de forma estruturada cada uma dessas vantagens para entender
+como funciona a segmentação.
+
+A **organização** através da segmentação é uma consequência natural da divisão
+feita da memória em **segmentos de tamanho variável** que refletem a estrutura
+lógica dos programas. Cada segmento pode representar uma parte distinta de um
+programa (e.g. *stack*, *data*, *code*). Para acessar um segmento em
+específico, deve-se utilizar o **seletor de segmento**. Para acessar um espaço
+de memória específico dentro de um segmento, utiliza-se um valor de
+**deslocamento**.
+
+<center>![](https://www.c-jump.com/CIS77/asm_images/SegMem.png)</center>
+
+O **isolamento e proteção** é uma consequência natural da existência dos
+registradores **descritores de segmento**. Nesses registradores, é possível
+definir um **nível de privilégio** e, assim, *negar ou permitir acesso* a algum
+segmento específico. Além disso, esses descritores armazenam o endereço base e
+o limite que descrevem um determinado segmento. Existem alguns segmentos de uso
+geral para os quais qualquer processo pode definir uma descrição de segmento.
+Para outros, de nível mais elevado de privilégio, apenas o sistema operacional
+pode editar as descrições.
+
+<center>![](https://www.eeeguide.com/wp-content/uploads/2022/06/Segmentation-in-Pentium-Processor-005.jpg)</center>
+
+É fácil fazer o **compartilhamento** justamente pela capacidade de cada
+processo definir uma descrição de segmento e pela capacidade do sistema
+operacional de gerenciar essas descrições.
+
+Por fim, é importante ressaltar que a **segmentação é um recurso opcional** e
+pode ser desabilidata. O comum para sistemas modernos, no entanto, é utilizar
+tando paginação quando segmentação.
+
+<center>![](https://www.gatevidyalay.com/wp-content/uploads/2018/11/Segmented-Paging-Translating-Logical-Address-into-Physical-Address-Diagram.png)</center>
+
+## 3. Tipos de dados x86
+
+## 4. Tipos de instruções x86
+
+## 5. Pipeline x86
+
+
+
