@@ -197,7 +197,7 @@ Aqui vem um ponto interessante: o que acontece na situação de indeterminação
 Aqui cabe destacar uma informação interessante. O valor prévio dos flip-flops pode ser definido por um circuito chamado de `Preset/Clear`. A função destes circuitos é carregar o valor desejado na saída do flip-flop independente do valor do estado anterior. Em geral, eles são sinais ativos em nível baixo, ligado sem `Zero`.
 
 <img 
-  src={"../../../assets/img/preset-reset-flip-flop-circuit.png"}
+  src={"../../../src/assets/img/preset-reset-flip-flop-circuit.png"}
   alt="Circuito de Preset e Reset"
   style={{ 
     display: 'block',
@@ -209,7 +209,7 @@ Aqui cabe destacar uma informação interessante. O valor prévio dos flip-flops
 <br/>
 
 <img 
-  src={"../../../assets/img/preset-reset-flip-flop-table.png"}
+  src={"../../../src/assets/img/preset-reset-flip-flop-table.png"}
   alt="Tabela Verdade de Preset e Reset"
   style={{ 
     display: 'block',
@@ -341,7 +341,7 @@ Os contadores são um tipo de sistema digital que utiliza os elementos que discu
 Vamos avaliar este circuito. Ambas as entradas, `J` e `K` estão em nível alto, portanto todos estão com o comportamento de `Toggle`. Um sinal de limpar todos é enviado ao `Clear` dos flipflops antes de iniciarmos a contagem, assim garantimos que todos eles estão em nível baixo.
 
 <img 
-  src={"../../../assets/img/contador-up-async.png"}
+  src={"../../../src/assets/img/contador-up-async.png"}
   alt="Tabela Verdade de Preset e Reset"
   style={{ 
     display: 'block',
@@ -392,7 +392,7 @@ Os contadores síncronos assim são chamados pois o sinal de clock entre todos o
 Ao observar o circuito do nosso contador, podemos confirmar algumas coisas: este contador pode contar até o valor 7 (0 até 7), pois possui apenas 3 bits. Agora o que está diferente aqui é o circuito de acionamento dos flipflops. Para compreender este circuito, vamos avaliar a carta de tempo do contador.
 
 <img 
-  src={"../../../assets/img/contador-up-async.png"}
+  src={"../../../src/assets/img/contador-up-async.png"}
   alt="Tabela Verdade de Preset e Reset"
   style={{ 
     display: 'block',
@@ -408,7 +408,7 @@ Ao observar este mapa de tempos, vamos verificar quando cada uma das saídas, `Q
 Agora vamos para `Q1`. Quando observamos os pontos que `Q1` muda no mapa, podemos ver que o estado da saída `Q0` sempre está em nível alto. Já `Q2` varia, sendo considerado tanto em nível alto quanto em nível baixo. O que podemos inferir, utilizando a algebra de Boole, que este sinal pode ser desconsiderado. Assim, o sinal `J` e `K` do FF1 podem ser ligados diretamente na saída `Q0`. 
 
 <img 
-  src={"../../../assets/img/contador-up-sync-q1.png"}
+  src={"../../../src/assets/img/contador-up-sync-q1.png"}
   alt="Tabela Verdade de Preset e Reset"
   style={{ 
     display: 'block',
@@ -422,7 +422,7 @@ Agora vamos para `Q1`. Quando observamos os pontos que `Q1` muda no mapa, podemo
 Por fim, vamos verificar os pontos que o `Q2` muda de estado. Podemos verificar que os sinais `Q0` e `Q1` precisam estar em nível alto para acionar o FF2. Logo estes sinais são ligados ao `J` e `K` deste flipflop.
 
 <img 
-  src={"../../../assets/img/contador-up-sync-q2.png"}
+  src={"../../../src/assets/img/contador-up-sync-q2.png"}
   alt="Tabela Verdade de Preset e Reset"
   style={{ 
     display: 'block',
